@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.railway.labor.career.model.User;
+
 @Controller
 public class LoginController {
 	@Value("${userName}")
@@ -19,7 +21,7 @@ public class LoginController {
 	}
 	@RequestMapping("/index")
 	@ResponseBody
-	String index() {
-		return "Hello World!" + userName + "," + password;
+	Object index() {
+		return new User();
 	}
 }
