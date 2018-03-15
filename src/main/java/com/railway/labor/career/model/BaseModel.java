@@ -37,7 +37,7 @@ public class BaseModel implements Serializable {
 	/**
 	 * 删除标志 1-已删除，0-未删除 table.collumn del_flag
 	 */
-	private String delFlag;
+	private String delFlag = "0";
 
 	public String getDelFlag() {
 		return delFlag;

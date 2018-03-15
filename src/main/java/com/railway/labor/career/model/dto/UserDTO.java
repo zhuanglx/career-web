@@ -2,6 +2,11 @@ package com.railway.labor.career.model.dto;
 
 import com.railway.labor.career.model.BaseModel;
 
+/**
+ * t_user
+ * @author zhuanglinxiang
+ *
+ */
 public class UserDTO extends BaseModel {
 	private static final long serialVersionUID = 4967397800781853929L;
 	private Long id;
