@@ -5,8 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.railway.labor.career.model.User;
-
+import com.railway.labor.career.common.BaseResult;
+import com.railway.labor.career.common.Pagination;
+import com.railway.labor.career.model.dto.LoginInfoDTO;
+import com.railway.labor.career.model.query.LoginInfoQuery;
+/**
+ * 登录
+ * @author zhuanglinxiang
+ *
+ */
 @Controller
 public class LoginController {
 	@Value("${userName}")
@@ -22,6 +29,13 @@ public class LoginController {
 	@RequestMapping("/index")
 	@ResponseBody
 	Object index() {
-		return new User();
+		Pagination<LoginInfoQuery,LoginInfoDTO> pagination = new Pagination<LoginInfoQuery,LoginInfoDTO>();
+		BaseResult<LoginInfoDTO> baseResult = new BaseResult<LoginInfoDTO>();
+		LoginInfoDTO loginInfoDTO = new LoginInfoDTO();
+		loginInfoDTO.setUserNo("xxxx");
+		loginInfoDTO.setPassword("yyyy");
+		baseResult.setSuccess(true);
+		baseResult.setValue(loginInfoDTO);
+		return baseResult;
 	}
 }
