@@ -20,7 +20,7 @@ public class BaseResult<T> implements Serializable {
 	private String errorMsg = "";
 	private String errorCode = "";
 	private T value;
-	private Map<String, Object> additionalInfo = new HashMap<String, Object>();
+	private Map<String, Object> extraInfo = new HashMap<String, Object>();
 
 	public boolean isSuccess() {
 		return isSuccess;
@@ -54,12 +54,12 @@ public class BaseResult<T> implements Serializable {
 		this.value = value;
 	}
 
-	public Map<String, Object> getAdditionalInfo() {
-		return additionalInfo;
+	public Map<String, Object> getExtraInfo() {
+		return extraInfo;
 	}
 
-	public void setAdditionalInfo(Map<String, Object> additionalInfo) {
-		this.additionalInfo = additionalInfo;
+	public void setExtraInfo(Map<String, Object> extraInfo) {
+		this.extraInfo = extraInfo;
 	}
 
 	@Override
