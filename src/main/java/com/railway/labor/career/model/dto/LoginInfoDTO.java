@@ -10,8 +10,8 @@ public class LoginInfoDTO implements Serializable{
 
 	private static final long serialVersionUID = -8510597811497678614L;
 	private Long id;
-	private String userName;
-	private String userNo;
+	private String account;
+	private String name;
 	private String password;
 
 	public Long getId() {
@@ -22,20 +22,21 @@ public class LoginInfoDTO implements Serializable{
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+
+	public String getAccount() {
+		return account;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
-	public String getUserNo() {
-		return userNo;
+	public String getName() {
+		return name;
 	}
 
-	public void setUserNo(String userNo) {
-		this.userNo = userNo;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPassword() {

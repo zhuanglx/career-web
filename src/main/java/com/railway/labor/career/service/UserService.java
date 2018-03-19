@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.railway.labor.career.common.Pagination;
 import com.railway.labor.career.dao.UserDAO;
 import com.railway.labor.career.model.dto.LoginInfoDTO;
 import com.railway.labor.career.model.dto.UserDTO;
@@ -19,7 +20,7 @@ public class UserService {
 		return userDAO.login(userNo, password);
 	}
 
-	public List<UserDTO> query(UserQuery userQuery) {
+	public Pagination<UserQuery, UserDTO> query(UserQuery userQuery) {
 		return userDAO.query(userQuery);
 	}
 

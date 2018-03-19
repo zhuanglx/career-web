@@ -1,26 +1,61 @@
 package com.railway.labor.career.model.query;
 
-public class UserQuery {
+import com.railway.labor.career.model.BaseQuery;
+
+public class UserQuery extends BaseQuery {
+	private static final long serialVersionUID = -3330144592859167555L;
 	private Long id;
-	private String userNo;
-	private String userName;
+	private String name;
+	private String account;
+	private String telephone;
+	private String email;
+	private String password;
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getUserNo() {
-		return userNo;
+
+	public String getName() {
+		return name;
 	}
-	public void setUserNo(String userNo) {
-		this.userNo = userNo;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getUserName() {
-		return userName;
+
+	public String getAccount() {
+		return account;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+
+	public void setAccount(String account) {
+		this.account = account;
 	}
-	
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }

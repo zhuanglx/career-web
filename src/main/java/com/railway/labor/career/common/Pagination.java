@@ -1,6 +1,7 @@
 package com.railway.labor.career.common;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -26,11 +27,11 @@ public class Pagination<T1, T2> implements Serializable {
 	/**
 	 * 第几页
 	 */
-	private int pageIndex = 0;
+	private long pageIndex = 0;
 	/**
 	 * 查询起始，
 	 */
-	private int start = 0;
+	private long start = 0;
 	/**
 	 * 每次查询数，
 	 */
@@ -38,7 +39,7 @@ public class Pagination<T1, T2> implements Serializable {
 	/**
 	 * 页码总数，
 	 */
-	private int pageTotal = 0;
+	private long pageTotal = 0;
 	/**
 	 * 总记录数，
 	 */
@@ -50,29 +51,35 @@ public class Pagination<T1, T2> implements Serializable {
 	/**
 	 * 查询结果，
 	 */
-	private List<T2> rows;
+	private List<T2> rows = new ArrayList<T2>();
 
 	public int getPageSize() {
 		return pageSize;
 	}
 
 	public void setPageSize(int pageSize) {
+		if (pageSize < 0) {
+			this.pageSize = 0;
+			return;
+		}
 		this.pageSize = pageSize;
 	}
 
-	public int getPageIndex() {
+	public long getPageIndex() {
 		return pageIndex;
 	}
 
-	public void setPageIndex(int pageIndex) {
+	public void setPageIndex(long pageIndex) {
+		this.start = (this.pageIndex - 1) * this.pageSize;
 		this.pageIndex = pageIndex;
 	}
 
-	public int getStart() {
+	public long getStart() {
 		return start;
 	}
 
-	public void setStart(int start) {
+	public void setStart(long start) {
+		this.pageIndex = (start -1)/this.pageSize;
 		this.start = start;
 	}
 
@@ -84,11 +91,11 @@ public class Pagination<T1, T2> implements Serializable {
 		this.limit = limit;
 	}
 
-	public int getPageTotal() {
+	public long getPageTotal() {
 		return pageTotal;
 	}
 
-	public void setPageTotal(int pageTotal) {
+	public void setPageTotal(long pageTotal) {
 		this.pageTotal = pageTotal;
 	}
 
@@ -98,6 +105,13 @@ public class Pagination<T1, T2> implements Serializable {
 
 	public void setResultTotal(long resultTotal) {
 		this.resultTotal = resultTotal;
+		this.pageTotal = this.resultTotal / this.pageSize;
+		if (this.resultTotal % this.pageSize > 0) {
+			this.pageTotal = this.pageTotal + 1;
+		}
+		if (this.pageTotal < this.pageIndex) {
+			setPageIndex(this.pageTotal);
+		}
 	}
 
 	public T1 getQuery() {
@@ -118,7 +132,9 @@ public class Pagination<T1, T2> implements Serializable {
 	}
 
 	public void setRows(List<T2> rows) {
-		this.rows = rows;
+		if (rows != null) {
+			this.rows = rows;
+		}
 	}
 
 	@Override

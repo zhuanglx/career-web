@@ -36,7 +36,7 @@ public class LoginController {
 			HttpServletRequest request) {
 		LoginInfoDTO loginInfo = null;
 		try {
-			loginInfo = userService.login(loginInfoDTO.getUserNo(),
+			loginInfo = userService.login(loginInfoDTO.getAccount(),
 					loginInfoDTO.getPassword());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,12 +53,9 @@ public class LoginController {
 	@RequestMapping("/logout")
 	@ResponseBody
 	Object logout(HttpServletRequest request, HttpServletResponse response) {
-		BaseResult<LoginInfoDTO> baseResult = new BaseResult<LoginInfoDTO>();
-		LoginInfoDTO loginInfoDTO = new LoginInfoDTO();
-		loginInfoDTO.setUserNo("xxxx");
-		loginInfoDTO.setPassword("yyyy");
+		BaseResult<Long> baseResult = new BaseResult<Long>();
 		baseResult.setSuccess(true);
-		baseResult.setValue(loginInfoDTO);
+		baseResult.setValue(12L);
 		return baseResult;
 	}
 }
