@@ -3,6 +3,8 @@ package com.railway.labor.career.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +22,7 @@ import com.railway.labor.career.service.UserService;
  */
 @Controller
 public class LoginController {
-
+	protected static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	@Autowired
 	private UserService userService;
 
@@ -39,12 +41,12 @@ public class LoginController {
 			loginInfo = userService.login(loginInfoDTO.getAccount(),
 					loginInfoDTO.getPassword());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(),e);
 		}
 		if (loginInfo != null) {
 			request.getSession().setAttribute("loginInfo", loginInfo);
 		}
-		BaseResult<LoginInfoDTO> baseResult = new BaseResult<LoginInfoDTO>();
+		BaseResult<LoginInfoDTO> baseResult = new BaseResult<>();
 		baseResult.setSuccess(true);
 		baseResult.setValue(loginInfo);
 		return baseResult;
@@ -53,7 +55,7 @@ public class LoginController {
 	@RequestMapping("/logout")
 	@ResponseBody
 	Object logout(HttpServletRequest request, HttpServletResponse response) {
-		BaseResult<Long> baseResult = new BaseResult<Long>();
+		BaseResult<Long> baseResult = new BaseResult<>();
 		baseResult.setSuccess(true);
 		baseResult.setValue(12L);
 		return baseResult;

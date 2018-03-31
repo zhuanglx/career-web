@@ -5,13 +5,29 @@ import java.io.Serializable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-
+/**
+ * 登录DTO
+ * @author zhuanglinxiang
+ *
+ */
 public class LoginInfoDTO implements Serializable{
 
 	private static final long serialVersionUID = -8510597811497678614L;
+	/**
+	 * 主键ID t_user.collumn id
+	 */
 	private Long id;
+	/**
+	 * 用户账号 t_user.collumn account
+	 */
 	private String account;
+	/**
+	 * 用户名称 t_user.collumn name
+	 */
 	private String name;
+	/**
+	 * 用户密码 t_user.collumn password
+	 */
 	private String password;
 
 	public Long getId() {

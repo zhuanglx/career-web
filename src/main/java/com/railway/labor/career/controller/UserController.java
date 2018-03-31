@@ -1,7 +1,7 @@
 package com.railway.labor.career.controller;
 
-import java.util.List;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +23,8 @@ import com.railway.labor.career.service.UserService;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	
+	 protected static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
 	@Autowired
 	private UserService userService;
 
@@ -35,7 +36,7 @@ public class UserController {
 	@RequestMapping(value = { "list", "" })
 	@ResponseBody
 	public BaseResult<Pagination<UserQuery, UserDTO>> list(UserQuery userQuery) {
-		BaseResult<Pagination<UserQuery, UserDTO>> baseResult = new BaseResult<Pagination<UserQuery, UserDTO>>();
+		BaseResult<Pagination<UserQuery, UserDTO>> baseResult = new BaseResult<>();
 		Pagination<UserQuery, UserDTO> pagination = null;
 		try {
 			pagination = userService.query(userQuery);
@@ -48,6 +49,7 @@ public class UserController {
 			}
 			
 		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
 			baseResult.setErrorCode(ErrorConstant.USER_QUERY_EXCEPTION_CODE);
 			baseResult.setErrorMsg(ErrorConstant.USER_QUERY_EXCEPTION_MSG);
 		}
@@ -64,7 +66,7 @@ public class UserController {
 	@RequestMapping(value = "get")
 	@ResponseBody
 	public BaseResult<UserDTO> get(Long id) {
-		BaseResult<UserDTO> baseResult = new BaseResult<UserDTO>();
+		BaseResult<UserDTO> baseResult = new BaseResult<>();
 		UserDTO userDTO = null;
 		try {
 			userDTO = userService.get(id);
@@ -76,6 +78,7 @@ public class UserController {
 				baseResult.setSuccess(true);
 			}
 		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
 			baseResult.setErrorCode(ErrorConstant.USER_QUERY_EXCEPTION_CODE);
 			baseResult.setErrorMsg(ErrorConstant.USER_QUERY_EXCEPTION_MSG);
 		}

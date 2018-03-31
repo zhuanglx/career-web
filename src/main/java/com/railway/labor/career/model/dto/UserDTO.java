@@ -1,6 +1,5 @@
 package com.railway.labor.career.model.dto;
 
-import com.railway.labor.career.model.BaseModel;
 
 /**
  * t_user
@@ -8,7 +7,7 @@ import com.railway.labor.career.model.BaseModel;
  * @author zhuanglinxiang
  * 
  */
-public class UserDTO extends BaseModel {
+public class UserDTO extends BaseDTO {
 	private static final long serialVersionUID = 4967397800781853929L;
 	/**
 	 * 主键ID t_user.collumn id

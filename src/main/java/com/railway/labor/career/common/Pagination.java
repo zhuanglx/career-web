@@ -63,6 +63,7 @@ public class Pagination<T1, T2> implements Serializable {
 			return;
 		}
 		this.pageSize = pageSize;
+		this.limit = this.pageSize;
 	}
 
 	public long getPageIndex() {
@@ -88,7 +89,12 @@ public class Pagination<T1, T2> implements Serializable {
 	}
 
 	public void setLimit(int limit) {
+		if (limit < 0) {
+			this.limit = 0;
+			return;
+		}
 		this.limit = limit;
+		this.pageSize = this.limit;
 	}
 
 	public long getPageTotal() {

@@ -1,6 +1,5 @@
 package com.railway.labor.career.model.query;
 
-import com.railway.labor.career.model.BaseQuery;
 
 public class UserQuery extends BaseQuery {
 	private static final long serialVersionUID = -3330144592859167555L;

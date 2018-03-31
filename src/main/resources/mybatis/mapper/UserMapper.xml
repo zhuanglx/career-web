@@ -24,36 +24,69 @@
 		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
 		<result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
 	</resultMap>
-	
+
 	<sql id="Base_Column_List">
 		id,name,account,telephone,email,password, creator,
 		create_date, modifier, modify_date, remarks, del_flag
+	</sql>
+
+
+	<sql id="Query_Params">
+		<where>
+			del_flag='0'
+			<if test="userQuery.id!=null">
+				and id=#{userQuery.id}
+			</if>
+			<if test="userQuery.name!=null and userQuery.name!=''">
+				and name=#{userQuery.name}
+			</if>
+			<if test="userQuery.account!=null and userQuery.account!=''">
+				and account=#{userQuery.account}
+			</if>
+			<if test="userQuery.telephone!=null and userQuery.telephone!=''">
+				and telephone=#{userQuery.telephone}
+			</if>
+			<if test="userQuery.email!=null and userQuery.email!=''">
+				and email=#{userQuery.email}
+			</if>
+			<if test="userQuery.password!=null and userQuery.password!=''">
+				and password=#{userQuery.password}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="Pagination">
+		limit #{pagination.start}, #{pagination.limit}
 	</sql>
 
 	<select id="login" resultMap="LoginResultMap">
 		SELECT
 		<include refid="Base_Column_List" />
 		FROM t_user
-		WHERE account = #{account, jdbcType=VARCHAR} and password = #{password,
+		WHERE account = #{account, jdbcType=VARCHAR} and password =
+		#{password,
 		jdbcType=VARCHAR} and del_flag = '0'
 	</select>
 
-	<select id="query" resultMap="BaseResultMap" parameterType="Map">
-		SELECT
-		<include refid="Base_Column_List" />
-		FROM t_user and del_flag = '0'
-	</select>
-
-	<select id="count" resultMap="Long" parameterType="Map">
-		SELECT count(*)
-		FROM t_user and del_flag = '0'
-	</select>
-
-	<select id="get" resultMap="BaseResultMap" parameterType="Long">
+	<select id="query" resultMap="BaseResultMap">
 		SELECT
 		<include refid="Base_Column_List" />
 		FROM t_user
-		WHERE id = #{id} and del_flag = '0'
+		<include refid="Query_Params" />
+		<include refid="Pagination" />
+	</select>
+
+	<select id="count" resultType="Long">
+		SELECT count(*)
+		FROM t_user
+		<include refid="Query_Params" />
+	</select>
+
+	<select id="get" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_user
+		WHERE id = #{id, jdbcType=BIGINT} and del_flag = '0'
 	</select>
 
 	<insert id="insert" parameterType="com.railway.labor.career.model.dto.UserDTO">

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.railway.labor.career.mapper.EvaluationConditionMapper">
+
+	<resultMap id="BaseResultMap" type="com.railway.labor.career.model.dto.EvaluationConditionDTO">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="employee_id" property="employeeId" jdbcType="BIGINT" />
+		<result column="type_of_work" property="typeOfWork" jdbcType="VARCHAR" />
+		<result column="sequence_old" property="sequenceOld" jdbcType="VARCHAR" />
+		<result column="grade_old" property="gradeOld" jdbcType="VARCHAR" />
+		<result column="star_detail" property="starDetail" jdbcType="VARCHAR" />
+		<result column="star_integral" property="starIntegral" jdbcType="VARCHAR" />
+		<result column="skill_detail" property="skillDetail" jdbcType="VARCHAR" />
+		<result column="skill_integral" property="skillIntegral" jdbcType="VARCHAR" />
+		<result column="fault_detail" property="faultDetail" jdbcType="VARCHAR" />
+		<result column="fault_integral" property="faultIntegral" jdbcType="VARCHAR" />
+		<result column="project_detail" property="projectDetail" jdbcType="VARCHAR" />
+		<result column="project_integral" property="projectIntegral" jdbcType="VARCHAR" />
+		<result column="honor_detail" property="honorDetail" jdbcType="VARCHAR" />
+		<result column="honor_integral" property="honorIntegral" jdbcType="VARCHAR" />
+		<result column="quasirating" property="quasirating" jdbcType="VARCHAR" />
+		<result column="creator" property="creator" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="DATE" />
+		<result column="modifier" property="modifier" jdbcType="VARCHAR" />
+		<result column="modify_date" property="modifyDate" jdbcType="DATE" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,employee_id,type_of_work,sequence_old,grade_old,star_detail,star_integral,skill_detail,skill_integral
+		fault_detail,fault_integral,project_detail,project_integral,honor_detail,honor_integral,quasirating,
+		,creator, create_date, modifier, modify_date, remarks, del_flag
+	</sql>
+
+
+	<sql id="Query_Params">
+		<where>
+			del_flag='0'
+			<if test="evaluationConditionQuery.id!=null">
+				and id=#{evaluationConditionQuery.id}
+			</if>
+			<if test="evaluationConditionQuery.employee_id!=null">
+				and name=#{evaluationConditionQuery.employeeId}
+			</if>
+			<if test="evaluationConditionQuery.typeOfWork!=null and evaluationConditionQuery.typeOfWork!=''">
+				and type_of_work=#{evaluationConditionQuery.typeOfWork}
+			</if>
+			<if test="evaluationConditionQuery.sequenceOld!=null and evaluationConditionQuery.sequenceOld!=''">
+				and sequence_old=#{evaluationConditionQuery.sequenceOld}
+			</if>
+			<if test="evaluationConditionQuery.gradeOld!=null and evaluationConditionQuery.gradeOld!=''">
+				and grade_old=#{evaluationConditionQuery.gradeOld}
+			</if>
+			<if test="evaluationConditionQuery.starDetail!=null and evaluationConditionQuery.starDetail!=''">
+				and star_detail=#{evaluationConditionQuery.starDetail}
+			</if>
+			<if test="evaluationConditionQuery.starDetail!=null and evaluationConditionQuery.starDetail!=''">
+				and star_integral=#{evaluationConditionQuery.starDetail}
+			</if>
+			<if test="evaluationConditionQuery.skillDetail!=null and evaluationConditionQuery.skillDetail!=''">
+				and skill_detail=#{evaluationConditionQuery.skillDetail}
+			</if>
+			<if test="evaluationConditionQuery.skillIntegral!=null and evaluationConditionQuery.skillIntegral!=''">
+				and skill_integral=#{evaluationConditionQuery.skillIntegral}
+			</if>
+			<if test="evaluationConditionQuery.faultDetail!=null and evaluationConditionQuery.faultDetail!=''">
+				and fault_detail=#{evaluationConditionQuery.faultDetail}
+			</if>
+			<if test="evaluationConditionQuery.faultIntegral!=null and evaluationConditionQuery.faultIntegral!=''">
+				and fault_integral=#{evaluationConditionQuery.faultIntegral}
+			</if>
+			<if test="evaluationConditionQuery.projectDetail!=null and evaluationConditionQuery.projectDetail!=''">
+				and project_detail=#{evaluationConditionQuery.projectDetail}
+			</if>
+			<if test="evaluationConditionQuery.projectIntegral!=null and evaluationConditionQuery.projectIntegral!=''">
+				and project_integral=#{evaluationConditionQuery.projectIntegral}
+			</if>
+			<if test="evaluationConditionQuery.honorDetail!=null and evaluationConditionQuery.honorDetail!=''">
+				and honor_detail=#{evaluationConditionQuery.honorDetail}
+			</if>
+			<if test="evaluationConditionQuery.honorIntegral!=null and evaluationConditionQuery.honorIntegral!=''">
+				and honor_integral=#{evaluationConditionQuery.honorIntegral}
+			</if>
+			<if test="evaluationConditionQuery.quasirating!=null and evaluationConditionQuery.quasirating!=''">
+				and quasirating=#{evaluationConditionQuery.quasirating}
+			</if>
+			
+		</where>
+	</sql>
+
+	<sql id="Pagination">
+		limit #{pagination.start}, #{pagination.limit}
+	</sql>
+
+	<select id="query" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_evaluation_condition
+		<include refid="Query_Params" />
+		<include refid="Pagination" />
+	</select>
+
+	<select id="count" resultType="Long">
+		SELECT count(*)
+		FROM t_evaluation_condition
+		<include refid="Query_Params" />
+	</select>
+
+	<select id="get" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_evaluation_condition
+		WHERE id = #{id, jdbcType=BIGINT} and del_flag = '0'
+	</select>
+
+	<insert id="insert" parameterType="com.railway.labor.career.model.dto.EvaluationConditionDTO">
+		INSERT INTO
+		t_evaluation_condition
+		(name,account,telephone,email,password,creator, create_date, modifier,
+		modify_date, remarks, del_flag)
+		VALUES
+		(#{name},
+		#{account},#{telephone},#{email}, '11', #{creator},
+		#{createDate},#{modifier}, #{modifyDate},#{remarks},#{delFlag})
+	</insert>
+
+	<update id="update" parameterType="com.railway.labor.career.model.dto.EvaluationConditionDTO">
+		UPDATE
+		t_evaluation_condition
+		SET
+		name = #{name},
+		password = #{password}
+		WHERE
+		id = #{id} and del_flag = '0'
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		UPDATE
+		t_evaluation_condition
+		SET
+		del_flag = '1'
+		WHERE
+		id =#{id} and del_flag = '0'
+	</delete>
+
+</mapper>
