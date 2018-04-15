@@ -1,7 +1,9 @@
 package com.railway.labor.career.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +20,21 @@ public class PermissionDAO {
 	public Long count(PermissionQuery permissionQuery) {
 		return permissionMapper.count(permissionQuery);
 	}
-	public Pagination<PermissionQuery, PermissionDTO> query(PermissionQuery permissionQuery) {
-		Pagination<PermissionQuery, PermissionDTO> pagination = new Pagination<>();
-		pagination.setQuery(permissionQuery);
-    	pagination.setResultTotal(count(permissionQuery));
-    	List<PermissionDTO> permissionDTOList = permissionMapper.query(permissionQuery,pagination);
+	
+	public Pagination<PermissionQuery, PermissionDTO> query(Pagination<PermissionQuery, PermissionDTO> pagination) {
+    	pagination.setResultTotal(count(pagination.getQuery()));
+    	List<PermissionDTO> permissionDTOList = permissionMapper.query(pagination.getQuery(),pagination);
     	pagination.setRows(permissionDTOList);
-		
 		return pagination;
 	}
-
+	
+	public List<PermissionDTO> queryByIds(List<Long> ids) {
+		if(CollectionUtils.isEmpty(ids)){
+			return new ArrayList<>(0);
+		}
+		return permissionMapper.queryByIds(ids);
+	}
+	
 	public PermissionDTO get(Long id) {
 		return permissionMapper.get(id);
 	}

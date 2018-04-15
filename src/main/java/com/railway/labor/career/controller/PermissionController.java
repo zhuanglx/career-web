@@ -1,9 +1,8 @@
 package com.railway.labor.career.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,8 +21,7 @@ import com.railway.labor.career.service.PermissionService;
  */
 @Controller
 @RequestMapping("/permission")
-public class PermissionController {
-	protected static final Logger logger = LoggerFactory.getLogger(PermissionController.class);
+public class PermissionController extends BaseController{
 	@Autowired
 	private PermissionService permissionService;
 
@@ -34,11 +32,14 @@ public class PermissionController {
 	 */
 	@RequestMapping(value = { "list", "" })
 	@ResponseBody
-	public BaseResult<Pagination<PermissionQuery, PermissionDTO>> list(PermissionQuery permissionQuery) {
+	public BaseResult<Pagination<PermissionQuery, PermissionDTO>> list(@RequestBody PermissionQuery permissionQuery, @RequestBody Integer pageSize, @RequestBody Long pageIndex) {
 		BaseResult<Pagination<PermissionQuery, PermissionDTO>> baseResult = new BaseResult<>();
-		Pagination<PermissionQuery, PermissionDTO> pagination = null;
+		Pagination<PermissionQuery, PermissionDTO> pagination = new Pagination<>();
+		pagination.setQuery(permissionQuery);
+		pagination.setPageIndex(pageIndex);
+		pagination.setPageSize(pageSize);
 		try {
-			pagination = permissionService.query(permissionQuery);
+			pagination = permissionService.query(pagination);
 			if(pagination==null){
 				baseResult.setErrorCode(ErrorConstant.USER_NULL_CODE);
 				baseResult.setErrorMsg(ErrorConstant.USER_NULL_MSG);
@@ -64,7 +65,7 @@ public class PermissionController {
 	 */
 	@RequestMapping(value = "get")
 	@ResponseBody
-	public BaseResult<PermissionDTO> get(Long id) {
+	public BaseResult<PermissionDTO> get(@RequestBody Long id) {
 		BaseResult<PermissionDTO> baseResult = new BaseResult<>();
 		PermissionDTO permissionDTO = null;
 		try {

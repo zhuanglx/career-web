@@ -18,11 +18,9 @@ public class EvaluationAbrogateDAO {
 	public Long count(EvaluationAbrogateQuery evaluationAbrogateQuery) {
 		return evaluationAbrogateMapper.count(evaluationAbrogateQuery);
 	}
-	public Pagination<EvaluationAbrogateQuery, EvaluationAbrogateDTO> query(EvaluationAbrogateQuery evaluationAbrogateQuery) {
-		Pagination<EvaluationAbrogateQuery, EvaluationAbrogateDTO> pagination = new Pagination<>();
-		pagination.setQuery(evaluationAbrogateQuery);
-    	pagination.setResultTotal(count(evaluationAbrogateQuery));
-    	List<EvaluationAbrogateDTO> evaluationAbrogateDTOList = evaluationAbrogateMapper.query(evaluationAbrogateQuery,pagination);
+	public Pagination<EvaluationAbrogateQuery, EvaluationAbrogateDTO> query(Pagination<EvaluationAbrogateQuery, EvaluationAbrogateDTO> pagination) {
+    	pagination.setResultTotal(count(pagination.getQuery()));
+    	List<EvaluationAbrogateDTO> evaluationAbrogateDTOList = evaluationAbrogateMapper.query(pagination.getQuery(),pagination);
     	pagination.setRows(evaluationAbrogateDTOList);
 		
 		return pagination;
@@ -36,8 +34,8 @@ public class EvaluationAbrogateDAO {
 		evaluationAbrogateMapper.insert(evaluationAbrogateDTO);
 	}
 
-	public void update(EvaluationAbrogateDTO evaluationAbrogateDTO) {
-		evaluationAbrogateMapper.insert(evaluationAbrogateDTO);
+	public int update(EvaluationAbrogateDTO evaluationAbrogateDTO) {
+		return evaluationAbrogateMapper.update(evaluationAbrogateDTO);
 	}
 
 	public void delete(Long id) {

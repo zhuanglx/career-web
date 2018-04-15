@@ -33,7 +33,12 @@ public class UserDTO extends BaseDTO {
 	 * 用户密码 t_user.collumn password
 	 */
 	private String password;
-
+	
+	/**
+	 * 用户密码 t_user.collumn employeeId
+	 */
+	private Long employeeId;
+	
 	public Long getId() {
 		return id;
 	}
@@ -80,6 +85,14 @@ public class UserDTO extends BaseDTO {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Long getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(Long employeeId) {
+		this.employeeId = employeeId;
 	}
 
 }

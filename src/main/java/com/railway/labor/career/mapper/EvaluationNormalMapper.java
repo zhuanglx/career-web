@@ -18,7 +18,7 @@ public interface EvaluationNormalMapper {
 
 	void insert(EvaluationNormalDTO evaluationNormalDTO);
 
-	void update(EvaluationNormalDTO evaluationNormalDTO);
+	int update(EvaluationNormalDTO evaluationNormalDTO);
 
 	void delete(Long id);
 }

@@ -16,17 +16,15 @@ public class UserDAO {
 	@Autowired
 	private UserMapper userMapper;
 
-	public LoginInfoDTO login(String userNo, String password) {
-		return userMapper.login(userNo, password);
+	public LoginInfoDTO login(String account, String password) {
+		return userMapper.login(account, password);
 	}
 	public Long count(UserQuery userQuery) {
 		return userMapper.count(userQuery);
 	}
-	public Pagination<UserQuery, UserDTO> query(UserQuery userQuery) {
-		Pagination<UserQuery, UserDTO> pagination = new Pagination<>();
-		pagination.setQuery(userQuery);
-    	pagination.setResultTotal(count(userQuery));
-    	List<UserDTO> userDTOList = userMapper.query(userQuery,pagination);
+	public Pagination<UserQuery, UserDTO> query(Pagination<UserQuery, UserDTO> pagination) {
+    	pagination.setResultTotal(count(pagination.getQuery()));
+    	List<UserDTO> userDTOList = userMapper.query(pagination.getQuery(),pagination);
     	pagination.setRows(userDTOList);
 		
 		return pagination;

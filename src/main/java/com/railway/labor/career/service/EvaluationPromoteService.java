@@ -14,8 +14,8 @@ public class EvaluationPromoteService {
 	@Autowired
 	private EvaluationPromoteDAO evaluationPromoteDAO;
 
-	public Pagination<EvaluationPromoteQuery, EvaluationPromoteDTO> query(EvaluationPromoteQuery evaluationPromoteQuery) {
-		return evaluationPromoteDAO.query(evaluationPromoteQuery);
+	public Pagination<EvaluationPromoteQuery, EvaluationPromoteDTO> query(Pagination<EvaluationPromoteQuery, EvaluationPromoteDTO> pagination) {
+		return evaluationPromoteDAO.query(pagination);
 	}
 
 	public EvaluationPromoteDTO get(Long id) {
@@ -26,11 +26,12 @@ public class EvaluationPromoteService {
 		evaluationPromoteDAO.insert(evaluationPromoteDTO);
 	}
 
-	public void update(EvaluationPromoteDTO evaluationPromoteDTO) {
-		evaluationPromoteDAO.insert(evaluationPromoteDTO);
+	public int update(EvaluationPromoteDTO evaluationPromoteDTO) {
+		return evaluationPromoteDAO.update(evaluationPromoteDTO);
 	}
 
-	void delete(Long id) {
-		evaluationPromoteDAO.delete(id);
+	public int delete(EvaluationPromoteDTO evaluationPromoteDTO) {
+		evaluationPromoteDTO.setDelFlag("1");
+		return evaluationPromoteDAO.update(evaluationPromoteDTO);
 	}
 }

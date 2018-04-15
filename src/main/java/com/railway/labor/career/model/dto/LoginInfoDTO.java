@@ -26,10 +26,10 @@ public class LoginInfoDTO implements Serializable{
 	 */
 	private String name;
 	/**
-	 * 用户密码 t_user.collumn password
+	 * 员工id t_user.collumn employee_id
 	 */
-	private String password;
-
+	private Long employeeId;
+	
 	public Long getId() {
 		return id;
 	}
@@ -55,13 +55,14 @@ public class LoginInfoDTO implements Serializable{
 		this.name = name;
 	}
 
-	public String getPassword() {
-		return password;
+	public Long getEmployeeId() {
+		return employeeId;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setEmployeeId(Long employeeId) {
+		this.employeeId = employeeId;
 	}
+
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this,

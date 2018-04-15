@@ -1,5 +1,7 @@
 package com.railway.labor.career.model.dto;
 
+import java.util.Date;
+
 /**
  * t_evaluation_abrogate
  * 
@@ -15,7 +17,7 @@ public class EvaluationAbrogateDTO extends BaseDTO {
 	/**
 	 * 员工id t_evaluation_normal.collumn employee_id
 	 */
-	private String employeeId;
+	private Long employeeId;
 	/**
 	 * 不参评条件 t_evaluation_normal.collumn no_comment_condition
 	 */
@@ -23,7 +25,7 @@ public class EvaluationAbrogateDTO extends BaseDTO {
 	/**
 	 * 评定日期 t_evaluation_normal.collumn evaluate_date
 	 */
-	private String evaluateDate;
+	private Date evaluateDate;
 
 	public Long getId() {
 		return id;
@@ -33,11 +35,11 @@ public class EvaluationAbrogateDTO extends BaseDTO {
 		this.id = id;
 	}
 
-	public String getEmployeeId() {
+	public Long getEmployeeId() {
 		return employeeId;
 	}
 
-	public void setEmployeeId(String employeeId) {
+	public void setEmployeeId(Long employeeId) {
 		this.employeeId = employeeId;
 	}
 
@@ -49,11 +51,11 @@ public class EvaluationAbrogateDTO extends BaseDTO {
 		this.noCommentCondition = noCommentCondition;
 	}
 
-	public String getEvaluateDate() {
+	public Date getEvaluateDate() {
 		return evaluateDate;
 	}
 
-	public void setEvaluateDate(String evaluateDate) {
+	public void setEvaluateDate(Date evaluateDate) {
 		this.evaluateDate = evaluateDate;
 	}
 

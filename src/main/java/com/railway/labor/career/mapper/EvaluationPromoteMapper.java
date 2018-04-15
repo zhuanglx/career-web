@@ -18,7 +18,7 @@ public interface EvaluationPromoteMapper {
 
 	void insert(EvaluationPromoteDTO evaluationPromoteDTO);
 
-	void update(EvaluationPromoteDTO evaluationPromoteDTO);
+	int update(EvaluationPromoteDTO evaluationPromoteDTO);
 
 	void delete(Long id);
 }

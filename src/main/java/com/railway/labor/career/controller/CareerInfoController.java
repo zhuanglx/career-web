@@ -1,9 +1,8 @@
 package com.railway.labor.career.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -15,30 +14,32 @@ import com.railway.labor.career.model.query.CareerInfoQuery;
 import com.railway.labor.career.service.CareerInfoService;
 
 /**
- * 用户
  * 
+ * 职业生涯
  * @author zhuanglinxiang
  * 
  */
 @Controller
 @RequestMapping("/careerInfo")
-public class CareerInfoController {
-	protected static final Logger logger = LoggerFactory.getLogger(CareerInfoController.class);
+public class CareerInfoController extends BaseController{
 	@Autowired
 	private CareerInfoService careerInfoService;
 
 	/**
-	 * 获取用户列表
+	 * 获取职业生涯列表
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = { "list.json", "" })
 	@ResponseBody
-	public BaseResult<Pagination<CareerInfoQuery, CareerInfoDTO>> list(CareerInfoQuery careerInfoQuery) {
+	public BaseResult<Pagination<CareerInfoQuery, CareerInfoDTO>> list(@RequestBody CareerInfoQuery careerInfoQuery,@RequestBody Integer pageSize, @RequestBody Long pageIndex) {
 		BaseResult<Pagination<CareerInfoQuery, CareerInfoDTO>> baseResult = new BaseResult<>();
-		Pagination<CareerInfoQuery, CareerInfoDTO> pagination = null;
+		Pagination<CareerInfoQuery, CareerInfoDTO> pagination = new Pagination<>();
+		pagination.setQuery(careerInfoQuery);
+		pagination.setPageIndex(pageIndex);
+		pagination.setPageSize(pageSize);
 		try {
-			pagination = careerInfoService.query(careerInfoQuery);
+			pagination = careerInfoService.query(pagination);
 			if(pagination==null){
 				baseResult.setErrorCode(ErrorConstant.USER_NULL_CODE);
 				baseResult.setErrorMsg(ErrorConstant.USER_NULL_MSG);
@@ -57,14 +58,14 @@ public class CareerInfoController {
 	}
 
 	/**
-	 * 获取用户信息
+	 * 获取职业生涯
 	 * 
 	 * @param id
 	 * @return
 	 */
 	@RequestMapping(value = "get.json")
 	@ResponseBody
-	public BaseResult<CareerInfoDTO> get(Long id) {
+	public BaseResult<CareerInfoDTO> get(@RequestBody Long id) {
 		BaseResult<CareerInfoDTO> baseResult = new BaseResult<>();
 		CareerInfoDTO careerInfoDTO = null;
 		try {

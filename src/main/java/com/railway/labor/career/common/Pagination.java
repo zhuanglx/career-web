@@ -27,7 +27,7 @@ public class Pagination<T1, T2> implements Serializable {
 	/**
 	 * 第几页
 	 */
-	private long pageIndex = 0;
+	private long pageIndex = 1;
 	/**
 	 * 查询起始，
 	 */
@@ -51,15 +51,14 @@ public class Pagination<T1, T2> implements Serializable {
 	/**
 	 * 查询结果，
 	 */
-	private List<T2> rows = new ArrayList<T2>();
+	private List<T2> rows = new ArrayList<T2>(0);
 
 	public int getPageSize() {
 		return pageSize;
 	}
 
 	public void setPageSize(int pageSize) {
-		if (pageSize < 0) {
-			this.pageSize = 0;
+		if (pageSize < 1) {
 			return;
 		}
 		this.pageSize = pageSize;
@@ -71,8 +70,14 @@ public class Pagination<T1, T2> implements Serializable {
 	}
 
 	public void setPageIndex(long pageIndex) {
-		this.start = (this.pageIndex - 1) * this.pageSize;
-		this.pageIndex = pageIndex;
+		if(pageIndex<1){
+			this.start = 0;
+			this.pageIndex = 0;
+		}else{
+			this.start = (this.pageIndex - 1) * this.pageSize;
+			this.pageIndex = pageIndex;
+		}
+		
 	}
 
 	public long getStart() {
@@ -80,8 +85,18 @@ public class Pagination<T1, T2> implements Serializable {
 	}
 
 	public void setStart(long start) {
-		this.pageIndex = (start -1)/this.pageSize;
-		this.start = start;
+		if(start<1){
+			this.pageIndex = 1;
+			this.start = 0;
+		}else{
+			if(start==1){
+				this.pageIndex =1;
+			}else{
+				this.pageIndex = (start -1)/this.pageSize;
+			}
+			this.start = start;
+		}
+		
 	}
 
 	public int getLimit() {
@@ -89,8 +104,7 @@ public class Pagination<T1, T2> implements Serializable {
 	}
 
 	public void setLimit(int limit) {
-		if (limit < 0) {
-			this.limit = 0;
+		if (limit < 1) {
 			return;
 		}
 		this.limit = limit;

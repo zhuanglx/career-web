@@ -6,21 +6,16 @@
 
 	<resultMap id="BaseResultMap" type="com.railway.labor.career.model.dto.EvaluationNormalDTO">
 		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="batch_no" property="batchNo" jdbcType="VARCHAR" />
+		<result column="input_department_id" property="inputDepartmentId" jdbcType="BIGINT" />
 		<result column="employee_id" property="employeeId" jdbcType="BIGINT" />
-		<result column="type_of_work" property="typeOfWork" jdbcType="VARCHAR" />
-		<result column="sequence_old" property="sequenceOld" jdbcType="VARCHAR" />
-		<result column="grade_old" property="gradeOld" jdbcType="VARCHAR" />
-		<result column="star_detail" property="starDetail" jdbcType="VARCHAR" />
-		<result column="star_integral" property="starIntegral" jdbcType="VARCHAR" />
-		<result column="skill_detail" property="skillDetail" jdbcType="VARCHAR" />
-		<result column="skill_integral" property="skillIntegral" jdbcType="VARCHAR" />
-		<result column="fault_detail" property="faultDetail" jdbcType="VARCHAR" />
-		<result column="fault_integral" property="faultIntegral" jdbcType="VARCHAR" />
-		<result column="project_detail" property="projectDetail" jdbcType="VARCHAR" />
-		<result column="project_integral" property="projectIntegral" jdbcType="VARCHAR" />
-		<result column="honor_detail" property="honorDetail" jdbcType="VARCHAR" />
-		<result column="honor_integral" property="honorIntegral" jdbcType="VARCHAR" />
-		<result column="quasirating" property="quasirating" jdbcType="VARCHAR" />
+		<result column="score_type" property="scoreType" jdbcType="VARCHAR" />
+		<result column="score_name" property="scoreName" jdbcType="VARCHAR" />
+		<result column="first_level" property="firstLevel" jdbcType="VARCHAR" />
+		<result column="second_level" property="secondLevel" jdbcType="VARCHAR" />
+		<result column="score_content" property="scoreContent" jdbcType="VARCHAR" />
+		<result column="score" property="score" jdbcType="VARCHAR" />
+		<result column="evaluate_date" property="evaluateDate" jdbcType="DATE" />
 		<result column="creator" property="creator" jdbcType="VARCHAR" />
 		<result column="create_date" property="createDate" jdbcType="DATE" />
 		<result column="modifier" property="modifier" jdbcType="VARCHAR" />
@@ -30,11 +25,9 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id,employee_id,type_of_work,sequence_old,grade_old,star_detail,star_integral,skill_detail,skill_integral
-		fault_detail,fault_integral,project_detail,project_integral,honor_detail,honor_integral,quasirating,
-		,creator, create_date, modifier, modify_date, remarks, del_flag
+		id,batch_no,input_department_id,employee_id,score_type,score_name,first_level,second_level,score_content,score,evaluate_date,creator, create_date, modifier,
+		modify_date, remarks, del_flag
 	</sql>
-
 
 	<sql id="Query_Params">
 		<where>
@@ -42,8 +35,14 @@
 			<if test="evaluationNormalQuery.id!=null">
 				and id=#{evaluationNormalQuery.id}
 			</if>
-			<if test="evaluationNormalQuery.employee_id!=null">
-				and name=#{evaluationNormalQuery.employeeId}
+			<if test="evaluationNormalQuery.batchNo!=null and evaluationNormalQuery.batchNo!=''">
+				and batch_no=#{evaluationNormalQuery.batchNo}
+			</if>
+			<if test="evaluationNormalQuery.inputDepartmentId!=null">
+				and input_department_id=#{evaluationNormalQuery.inputDepartmentId}
+			</if>
+			<if test="evaluationNormalQuery.employeeId!=null">
+				and employee_id=#{evaluationNormalQuery.employeeId}
 			</if>
 			<if test="evaluationNormalQuery.typeOfWork!=null and evaluationNormalQuery.typeOfWork!=''">
 				and type_of_work=#{evaluationNormalQuery.typeOfWork}
@@ -98,48 +97,99 @@
 	<select id="query" resultMap="BaseResultMap">
 		SELECT
 		<include refid="Base_Column_List" />
-		FROM t_career_info
+		FROM t_evaluation_normal
 		<include refid="Query_Params" />
 		<include refid="Pagination" />
 	</select>
 
 	<select id="count" resultType="Long">
 		SELECT count(*)
-		FROM t_career_info
+		FROM t_evaluation_normal
 		<include refid="Query_Params" />
 	</select>
 
 	<select id="get" resultMap="BaseResultMap">
 		SELECT
 		<include refid="Base_Column_List" />
-		FROM t_career_info
+		FROM t_evaluation_normal
 		WHERE id = #{id, jdbcType=BIGINT} and del_flag = '0'
 	</select>
 
 	<insert id="insert" parameterType="com.railway.labor.career.model.dto.EvaluationNormalDTO">
+		<selectKey keyProperty="id" resultType="java.lang.Long"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 		INSERT INTO
-		t_career_info
-		(name,account,telephone,email,password,creator, create_date, modifier,
+		t_evaluation_normal
+		(batch_no,input_department_id,employee_id,score_type,score_name,first_level,second_level,score_content,score,evaluate_date,creator, create_date, modifier,
 		modify_date, remarks, del_flag)
 		VALUES
-		(#{name},
-		#{account},#{telephone},#{email}, '11', #{creator},
-		#{createDate},#{modifier}, #{modifyDate},#{remarks},#{delFlag})
+		(#{inputDepartmentId},#{batchNo},#{employeeId},#{scoreType},#{scoreName},#{firstLevel},#{secondLevel},#{scoreContent},#{score}, #{evaluateDate}, 
+		#{creator},#{createDate},#{modifier}, #{modifyDate},#{remarks},#{delFlag})
 	</insert>
 
-	<update id="update" parameterType="com.railway.labor.career.model.dto.EvaluationNormalDTO">
-		UPDATE
-		t_career_info
-		SET
-		name = #{name},
-		password = #{password}
+	<update id="update"
+		parameterType="com.railway.labor.career.model.dto.EvaluationNormalDTO">
+		UPDATE t_evaluation_normal
+		<set>
+			<if test="batchNo != null">
+				batch_no = #{batchNo},
+			</if>
+			<if test="inputDepartmentId != null">
+				input_department_id = #{inputDepartmentId},
+			</if>
+			<if test="employeeId != null">
+				employee_id = #{employeeId},
+			</if>
+			<if test="scoreType != null">
+				score_type = #{scoreType},
+			</if>
+			<if test="scoreName != null">
+				score_name = #{scoreName},
+			</if>
+			<if test="firstLevel != null">
+				first_level = #{firstLevel},
+			</if>
+			<if test="secondLevel != null">
+				second_level = #{secondLevel},
+			</if>
+			<if test="scoreContent != null">
+				score_content = #{scoreContent},
+			</if>
+			<if test="score != null">
+				score = #{score},
+			</if>
+			<if test="evaluateDate != null">
+				evaluate_date = #{evaluateDate},
+			</if>
+			<if test="creator != null">
+				creator = #{creator},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate},
+			</if>
+			<if test="modifier != null">
+				modifier = #{modifier},
+			</if>
+			<if test="modifyDate != null">
+				modify_date = #{modifyDate},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag},
+			</if>
+		</set>
 		WHERE
 		id = #{id} and del_flag = '0'
 	</update>
 
+
 	<delete id="delete" parameterType="java.lang.Long">
 		UPDATE
-		t_career_info
+		t_evaluation_normal
 		SET
 		del_flag = '1'
 		WHERE

@@ -17,7 +17,7 @@ public class BaseDTO implements Serializable {
 	/**
 	 * 创建人 table.collumn creator
 	 */
-	private String creator;
+	private Long creator;
 	/**
 	 * 创建时间 table.collumn create_date
 	 */
@@ -25,7 +25,7 @@ public class BaseDTO implements Serializable {
 	/**
 	 * 修改人 table.collumn modifier
 	 */
-	private String modifier;
+	private Long modifier;
 	/**
 	 * 修改时间 table.collumn modify_date
 	 */
@@ -47,11 +47,11 @@ public class BaseDTO implements Serializable {
 		this.delFlag = delFlag;
 	}
 
-	public String getCreator() {
+	public Long getCreator() {
 		return creator;
 	}
 
-	public void setCreator(String creator) {
+	public void setCreator(Long creator) {
 		this.creator = creator;
 	}
 
@@ -63,11 +63,11 @@ public class BaseDTO implements Serializable {
 		this.createDate = createDate;
 	}
 
-	public String getModifier() {
+	public Long getModifier() {
 		return modifier;
 	}
 
-	public void setModifier(String modifier) {
+	public void setModifier(Long modifier) {
 		this.modifier = modifier;
 	}
 

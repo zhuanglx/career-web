@@ -14,12 +14,12 @@ public class UserService {
 
 	@Autowired
 	private UserDAO userDAO;
-	public LoginInfoDTO login(String userNo, String password) {
-		return userDAO.login(userNo, password);
+	public LoginInfoDTO login(String account, String password) {
+		return userDAO.login(account, password);
 	}
 
-	public Pagination<UserQuery, UserDTO> query(UserQuery userQuery) {
-		return userDAO.query(userQuery);
+	public Pagination<UserQuery, UserDTO> query(Pagination<UserQuery, UserDTO> pagination) {
+		return userDAO.query(pagination);
 	}
 
 	public UserDTO get(Long id) {

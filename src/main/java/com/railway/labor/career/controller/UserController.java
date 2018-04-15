@@ -1,9 +1,8 @@
 package com.railway.labor.career.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,8 +21,7 @@ import com.railway.labor.career.service.UserService;
  */
 @Controller
 @RequestMapping("/user")
-public class UserController {
-	 protected static final Logger logger = LoggerFactory.getLogger(UserController.class);
+public class UserController extends BaseController{
 
 	@Autowired
 	private UserService userService;
@@ -35,11 +33,14 @@ public class UserController {
 	 */
 	@RequestMapping(value = { "list", "" })
 	@ResponseBody
-	public BaseResult<Pagination<UserQuery, UserDTO>> list(UserQuery userQuery) {
+	public BaseResult<Pagination<UserQuery, UserDTO>> list(@RequestBody UserQuery userQuery, @RequestBody Integer pageSize, @RequestBody Long pageIndex) {
 		BaseResult<Pagination<UserQuery, UserDTO>> baseResult = new BaseResult<>();
-		Pagination<UserQuery, UserDTO> pagination = null;
+		Pagination<UserQuery, UserDTO> pagination = new Pagination<>();
+		pagination.setQuery(userQuery);
+		pagination.setPageSize(pageSize);
+		pagination.setPageIndex(pageIndex);
 		try {
-			pagination = userService.query(userQuery);
+			pagination = userService.query(pagination);
 			if(pagination==null){
 				baseResult.setErrorCode(ErrorConstant.USER_NULL_CODE);
 				baseResult.setErrorMsg(ErrorConstant.USER_NULL_MSG);
@@ -65,7 +66,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "get")
 	@ResponseBody
-	public BaseResult<UserDTO> get(Long id) {
+	public BaseResult<UserDTO> get(@RequestBody Long id) {
 		BaseResult<UserDTO> baseResult = new BaseResult<>();
 		UserDTO userDTO = null;
 		try {

@@ -14,17 +14,25 @@ public class EvaluationNormalDTO  extends BaseDTO {
 	 */
 	private Long id;
 	/**
+	 * 批次号  t_evaluation_normal.collumn batch_no
+	 */
+	private String batchNo;
+	/**
+	 * 录入部门 t_evaluation_normal.collumn input_department_id
+	 */
+	private String inputDepartmentId;
+	/**
 	 * 员工id t_evaluation_normal.collumn employee_id
 	 */
 	private String employeeId;
 	/**
 	 * 积分分类 t_evaluation_normal.collumn score_type
 	 */
-	private Long scoreType;
+	private String scoreType;
 	/**
 	 * 积分名称 t_evaluation_normal.collumn score_name
 	 */
-	private Long scoreName;
+	private String scoreName;
 	/**
 	 * 一级标准 t_evaluation_normal.collumn first_level
 	 */
@@ -51,22 +59,36 @@ public class EvaluationNormalDTO  extends BaseDTO {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	public String getBatchNo() {
+		return batchNo;
+	}
+	public void setBatchNo(String batchNo) {
+		this.batchNo = batchNo;
+	}
+	
+	public String getInputDepartmentId() {
+		return inputDepartmentId;
+	}
+	public void setInputDepartmentId(String inputDepartmentId) {
+		this.inputDepartmentId = inputDepartmentId;
+	}
 	public String getEmployeeId() {
 		return employeeId;
 	}
 	public void setEmployeeId(String employeeId) {
 		this.employeeId = employeeId;
 	}
-	public Long getScoreType() {
+	public String getScoreType() {
 		return scoreType;
 	}
-	public void setScoreType(Long scoreType) {
+	public void setScoreType(String scoreType) {
 		this.scoreType = scoreType;
 	}
-	public Long getScoreName() {
+	public String getScoreName() {
 		return scoreName;
 	}
-	public void setScoreName(Long scoreName) {
+	public void setScoreName(String scoreName) {
 		this.scoreName = scoreName;
 	}
 	public String getFirstLevel() {

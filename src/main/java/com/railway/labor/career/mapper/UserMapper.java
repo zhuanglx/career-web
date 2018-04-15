@@ -11,7 +11,7 @@ import com.railway.labor.career.model.query.UserQuery;
 
 public interface UserMapper {
 
-	LoginInfoDTO login(@Param("userNo") String userNo,
+	LoginInfoDTO login(@Param("account") String account,
 			@Param("password") String password);
 
 	List<UserDTO> query(@Param("userQuery") UserQuery userQuery, @Param("pagination") Pagination<UserQuery, UserDTO> pagination);

@@ -1,9 +1,8 @@
 package com.railway.labor.career.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,8 +21,7 @@ import com.railway.labor.career.service.EmployeeService;
  */
 @Controller
 @RequestMapping("/employee")
-public class EmployeeController {
-	protected static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+public class EmployeeController  extends BaseController{
 	@Autowired
 	private EmployeeService employeeService;
 
@@ -34,11 +32,14 @@ public class EmployeeController {
 	 */
 	@RequestMapping(value = { "list", "" })
 	@ResponseBody
-	public BaseResult<Pagination<EmployeeQuery, EmployeeDTO>> list(EmployeeQuery employeeQuery) {
+	public BaseResult<Pagination<EmployeeQuery, EmployeeDTO>> list(@RequestBody EmployeeQuery employeeQuery, @RequestBody Integer pageSize, @RequestBody Long pageIndex) {
 		BaseResult<Pagination<EmployeeQuery, EmployeeDTO>> baseResult = new BaseResult<>();
-		Pagination<EmployeeQuery, EmployeeDTO> pagination = null;
+		Pagination<EmployeeQuery, EmployeeDTO> pagination = new Pagination<>();
+		pagination.setQuery(employeeQuery);
+		pagination.setPageIndex(pageIndex);
+		pagination.setPageSize(pageSize);
 		try {
-			pagination = employeeService.query(employeeQuery);
+			pagination = employeeService.query(pagination);
 			if(pagination==null){
 				baseResult.setErrorCode(ErrorConstant.USER_NULL_CODE);
 				baseResult.setErrorMsg(ErrorConstant.USER_NULL_MSG);
@@ -64,7 +65,7 @@ public class EmployeeController {
 	 */
 	@RequestMapping(value = "get")
 	@ResponseBody
-	public BaseResult<EmployeeDTO> get(Long id) {
+	public BaseResult<EmployeeDTO> get(@RequestBody Long id) {
 		BaseResult<EmployeeDTO> baseResult = new BaseResult<>();
 		EmployeeDTO employeeDTO = null;
 		try {

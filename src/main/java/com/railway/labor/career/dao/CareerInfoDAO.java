@@ -3,7 +3,10 @@ package com.railway.labor.career.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 
 import com.railway.labor.career.common.Pagination;
 import com.railway.labor.career.mapper.CareerInfoMapper;
@@ -14,15 +17,16 @@ import com.railway.labor.career.model.query.CareerInfoQuery;
 public class CareerInfoDAO {
 	@Autowired
 	private CareerInfoMapper careerInfoMapper;
-
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+	}
 	public Long count(CareerInfoQuery careerInfoQuery) {
 		return careerInfoMapper.count(careerInfoQuery);
 	}
-	public Pagination<CareerInfoQuery, CareerInfoDTO> query(CareerInfoQuery careerInfoQuery) {
-		Pagination<CareerInfoQuery, CareerInfoDTO> pagination = new Pagination<>();
-		pagination.setQuery(careerInfoQuery);
-    	pagination.setResultTotal(count(careerInfoQuery));
-    	List<CareerInfoDTO> careerInfoDTOList = careerInfoMapper.query(careerInfoQuery,pagination);
+	public Pagination<CareerInfoQuery, CareerInfoDTO> query(Pagination<CareerInfoQuery, CareerInfoDTO> pagination) {
+    	pagination.setResultTotal(count(pagination.getQuery()));
+    	List<CareerInfoDTO> careerInfoDTOList = careerInfoMapper.query(pagination.getQuery(),pagination);
     	pagination.setRows(careerInfoDTOList);
 		
 		return pagination;

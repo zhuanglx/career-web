@@ -6,9 +6,10 @@
 	<resultMap id="LoginResultMap"
 		type="com.railway.labor.career.model.dto.LoginInfoDTO">
 		<id column="id" property="id" jdbcType="BIGINT" />
-		<result column="account" property="userNo" jdbcType="VARCHAR" />
-		<result column="name" property="userName" jdbcType="VARCHAR" />
-		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="account" property="account" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="employee_id" property="employeeId" jdbcType="VARCHAR" />
+		
 	</resultMap>
 	<resultMap id="BaseResultMap" type="com.railway.labor.career.model.dto.UserDTO">
 		<id column="id" property="id" jdbcType="BIGINT" />
@@ -17,6 +18,7 @@
 		<result column="telephone" property="telephone" jdbcType="VARCHAR" />
 		<result column="email" property="email" jdbcType="VARCHAR" />
 		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="employee_id" property="employeeId" jdbcType="VARCHAR" />
 		<result column="creator" property="creator" jdbcType="VARCHAR" />
 		<result column="create_date" property="createDate" jdbcType="DATE" />
 		<result column="modifier" property="modifier" jdbcType="VARCHAR" />
@@ -26,7 +28,7 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id,name,account,telephone,email,password, creator,
+		id,name,account,telephone,email,password,employee_id,creator,
 		create_date, modifier, modify_date, remarks, del_flag
 	</sql>
 
@@ -52,6 +54,10 @@
 			<if test="userQuery.password!=null and userQuery.password!=''">
 				and password=#{userQuery.password}
 			</if>
+			<if test="userQuery.employeeId!=null">
+				and employee_id=#{userQuery.employeeId}
+			</if>
+			
 		</where>
 	</sql>
 
@@ -92,11 +98,11 @@
 	<insert id="insert" parameterType="com.railway.labor.career.model.dto.UserDTO">
 		INSERT INTO
 		t_user
-		(name,account,telephone,email,password,creator, create_date, modifier,
+		(name,account,telephone,email,password,employee_id,creator, create_date, modifier,
 		modify_date, remarks, del_flag)
 		VALUES
 		(#{name},
-		#{account},#{telephone},#{email}, '11', #{creator},
+		#{account},#{telephone},#{email}, '123456',#{employee_id}, #{creator},
 		#{createDate},#{modifier}, #{modifyDate},#{remarks},#{delFlag})
 	</insert>
 

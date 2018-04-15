@@ -14,8 +14,8 @@ public class EmployeeService {
 	@Autowired
 	private EmployeeDAO employeeDAO;
 
-	public Pagination<EmployeeQuery, EmployeeDTO> query(EmployeeQuery employeeQuery) {
-		return employeeDAO.query(employeeQuery);
+	public Pagination<EmployeeQuery, EmployeeDTO> query(Pagination<EmployeeQuery, EmployeeDTO> pagination) {
+		return employeeDAO.query(pagination);
 	}
 
 	public EmployeeDTO get(Long id) {

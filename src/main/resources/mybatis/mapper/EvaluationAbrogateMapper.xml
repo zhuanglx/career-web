@@ -4,23 +4,12 @@
 
 <mapper namespace="com.railway.labor.career.mapper.EvaluationAbrogateMapper">
 
-	<resultMap id="BaseResultMap" type="com.railway.labor.career.model.dto.EvaluationAbrogateDTO">
+	<resultMap id="BaseResultMap"
+		type="com.railway.labor.career.model.dto.EvaluationAbrogateDTO">
 		<id column="id" property="id" jdbcType="BIGINT" />
 		<result column="employee_id" property="employeeId" jdbcType="BIGINT" />
-		<result column="type_of_work" property="typeOfWork" jdbcType="VARCHAR" />
-		<result column="sequence_old" property="sequenceOld" jdbcType="VARCHAR" />
-		<result column="grade_old" property="gradeOld" jdbcType="VARCHAR" />
-		<result column="star_detail" property="starDetail" jdbcType="VARCHAR" />
-		<result column="star_integral" property="starIntegral" jdbcType="VARCHAR" />
-		<result column="skill_detail" property="skillDetail" jdbcType="VARCHAR" />
-		<result column="skill_integral" property="skillIntegral" jdbcType="VARCHAR" />
-		<result column="fault_detail" property="faultDetail" jdbcType="VARCHAR" />
-		<result column="fault_integral" property="faultIntegral" jdbcType="VARCHAR" />
-		<result column="project_detail" property="projectDetail" jdbcType="VARCHAR" />
-		<result column="project_integral" property="projectIntegral" jdbcType="VARCHAR" />
-		<result column="honor_detail" property="honorDetail" jdbcType="VARCHAR" />
-		<result column="honor_integral" property="honorIntegral" jdbcType="VARCHAR" />
-		<result column="quasirating" property="quasirating" jdbcType="VARCHAR" />
+		<result column="no_comment_condition" property="noCommentCondition" jdbcType="VARCHAR" />
+		<result column="evaluate_date" property="evaluateDate" jdbcType="VARCHAR" />
 		<result column="creator" property="creator" jdbcType="VARCHAR" />
 		<result column="create_date" property="createDate" jdbcType="DATE" />
 		<result column="modifier" property="modifier" jdbcType="VARCHAR" />
@@ -30,11 +19,8 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id,employee_id,type_of_work,sequence_old,grade_old,star_detail,star_integral,skill_detail,skill_integral
-		fault_detail,fault_integral,project_detail,project_integral,honor_detail,honor_integral,quasirating,
-		,creator, create_date, modifier, modify_date, remarks, del_flag
+		id, employee_id, no_comment_condition, evaluate_date, creator, create_date, modifier, modify_date, remarks, del_flag
 	</sql>
-
 
 	<sql id="Query_Params">
 		<where>
@@ -45,49 +31,63 @@
 			<if test="evaluationAbrogateQuery.employee_id!=null">
 				and name=#{evaluationAbrogateQuery.employeeId}
 			</if>
-			<if test="evaluationAbrogateQuery.typeOfWork!=null and evaluationAbrogateQuery.typeOfWork!=''">
+			<if
+				test="evaluationAbrogateQuery.typeOfWork!=null and evaluationAbrogateQuery.typeOfWork!=''">
 				and type_of_work=#{evaluationAbrogateQuery.typeOfWork}
 			</if>
-			<if test="evaluationAbrogateQuery.sequenceOld!=null and evaluationAbrogateQuery.sequenceOld!=''">
+			<if
+				test="evaluationAbrogateQuery.sequenceOld!=null and evaluationAbrogateQuery.sequenceOld!=''">
 				and sequence_old=#{evaluationAbrogateQuery.sequenceOld}
 			</if>
-			<if test="evaluationAbrogateQuery.gradeOld!=null and evaluationAbrogateQuery.gradeOld!=''">
+			<if
+				test="evaluationAbrogateQuery.gradeOld!=null and evaluationAbrogateQuery.gradeOld!=''">
 				and grade_old=#{evaluationAbrogateQuery.gradeOld}
 			</if>
-			<if test="evaluationAbrogateQuery.starDetail!=null and evaluationAbrogateQuery.starDetail!=''">
+			<if
+				test="evaluationAbrogateQuery.starDetail!=null and evaluationAbrogateQuery.starDetail!=''">
 				and star_detail=#{evaluationAbrogateQuery.starDetail}
 			</if>
-			<if test="evaluationAbrogateQuery.starDetail!=null and evaluationAbrogateQuery.starDetail!=''">
+			<if
+				test="evaluationAbrogateQuery.starDetail!=null and evaluationAbrogateQuery.starDetail!=''">
 				and star_integral=#{evaluationAbrogateQuery.starDetail}
 			</if>
-			<if test="evaluationAbrogateQuery.skillDetail!=null and evaluationAbrogateQuery.skillDetail!=''">
+			<if
+				test="evaluationAbrogateQuery.skillDetail!=null and evaluationAbrogateQuery.skillDetail!=''">
 				and skill_detail=#{evaluationAbrogateQuery.skillDetail}
 			</if>
-			<if test="evaluationAbrogateQuery.skillIntegral!=null and evaluationAbrogateQuery.skillIntegral!=''">
+			<if
+				test="evaluationAbrogateQuery.skillIntegral!=null and evaluationAbrogateQuery.skillIntegral!=''">
 				and skill_integral=#{evaluationAbrogateQuery.skillIntegral}
 			</if>
-			<if test="evaluationAbrogateQuery.faultDetail!=null and evaluationAbrogateQuery.faultDetail!=''">
+			<if
+				test="evaluationAbrogateQuery.faultDetail!=null and evaluationAbrogateQuery.faultDetail!=''">
 				and fault_detail=#{evaluationAbrogateQuery.faultDetail}
 			</if>
-			<if test="evaluationAbrogateQuery.faultIntegral!=null and evaluationAbrogateQuery.faultIntegral!=''">
+			<if
+				test="evaluationAbrogateQuery.faultIntegral!=null and evaluationAbrogateQuery.faultIntegral!=''">
 				and fault_integral=#{evaluationAbrogateQuery.faultIntegral}
 			</if>
-			<if test="evaluationAbrogateQuery.projectDetail!=null and evaluationAbrogateQuery.projectDetail!=''">
+			<if
+				test="evaluationAbrogateQuery.projectDetail!=null and evaluationAbrogateQuery.projectDetail!=''">
 				and project_detail=#{evaluationAbrogateQuery.projectDetail}
 			</if>
-			<if test="evaluationAbrogateQuery.projectIntegral!=null and evaluationAbrogateQuery.projectIntegral!=''">
+			<if
+				test="evaluationAbrogateQuery.projectIntegral!=null and evaluationAbrogateQuery.projectIntegral!=''">
 				and project_integral=#{evaluationAbrogateQuery.projectIntegral}
 			</if>
-			<if test="evaluationAbrogateQuery.honorDetail!=null and evaluationAbrogateQuery.honorDetail!=''">
+			<if
+				test="evaluationAbrogateQuery.honorDetail!=null and evaluationAbrogateQuery.honorDetail!=''">
 				and honor_detail=#{evaluationAbrogateQuery.honorDetail}
 			</if>
-			<if test="evaluationAbrogateQuery.honorIntegral!=null and evaluationAbrogateQuery.honorIntegral!=''">
+			<if
+				test="evaluationAbrogateQuery.honorIntegral!=null and evaluationAbrogateQuery.honorIntegral!=''">
 				and honor_integral=#{evaluationAbrogateQuery.honorIntegral}
 			</if>
-			<if test="evaluationAbrogateQuery.quasirating!=null and evaluationAbrogateQuery.quasirating!=''">
+			<if
+				test="evaluationAbrogateQuery.quasirating!=null and evaluationAbrogateQuery.quasirating!=''">
 				and quasirating=#{evaluationAbrogateQuery.quasirating}
 			</if>
-			
+
 		</where>
 	</sql>
 
@@ -113,26 +113,59 @@
 		SELECT
 		<include refid="Base_Column_List" />
 		FROM t_evaluation_abrogate
-		WHERE id = #{id, jdbcType=BIGINT} and del_flag = '0'
+		WHERE id = #{id, jdbcType=BIGINT} and
+		del_flag = '0'
 	</select>
 
-	<insert id="insert" parameterType="com.railway.labor.career.model.dto.EvaluationAbrogateDTO">
+	<insert id="insert"
+		parameterType="com.railway.labor.career.model.dto.EvaluationAbrogateDTO">
+		<selectKey keyProperty="id" resultType="java.lang.Long"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 		INSERT INTO
 		t_evaluation_abrogate
-		(name,account,telephone,email,password,creator, create_date, modifier,
+		(employee_id,
+		no_comment_condition,evaluate_date, creator, create_date, modifier,
 		modify_date, remarks, del_flag)
 		VALUES
-		(#{name},
-		#{account},#{telephone},#{email}, '11', #{creator},
-		#{createDate},#{modifier}, #{modifyDate},#{remarks},#{delFlag})
+		(#{employeeId},
+		#{noCommentCondition},#{evaluateDate},
+		#{creator}, #{createDate},#{modifier}, #{modifyDate},#{remarks},#{delFlag})
 	</insert>
 
-	<update id="update" parameterType="com.railway.labor.career.model.dto.EvaluationAbrogateDTO">
-		UPDATE
-		t_evaluation_abrogate
-		SET
-		name = #{name},
-		password = #{password}
+	<update id="update"
+		parameterType="com.railway.labor.career.model.dto.EvaluationAbrogateDTO">
+		UPDATE t_evaluation_abrogate
+		<set>
+			<if test="employeeId != null">
+				employee_id = #{employeeId},
+			</if>
+			<if test="noCommentCondition != null">
+				no_comment_condition = #{noCommentCondition},
+			</if>
+			<if test="evaluateDate != null">
+				evaluate_date = #{evaluateDate},
+			</if>
+			<if test="creator != null">
+				creator = #{creator},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate},
+			</if>
+			<if test="modifier != null">
+				modifier = #{modifier},
+			</if>
+			<if test="modifyDate != null">
+				modify_date = #{modifyDate},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag},
+			</if>
+		</set>
 		WHERE
 		id = #{id} and del_flag = '0'
 	</update>

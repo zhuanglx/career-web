@@ -17,11 +17,9 @@ public class EmployeeDAO {
 	public Long count(EmployeeQuery employeeQuery) {
 		return employeeMapper.count(employeeQuery);
 	}
-	public Pagination<EmployeeQuery, EmployeeDTO> query(EmployeeQuery employeeQuery) {
-		Pagination<EmployeeQuery, EmployeeDTO> pagination = new Pagination<>();
-		pagination.setQuery(employeeQuery);
-    	pagination.setResultTotal(count(employeeQuery));
-    	List<EmployeeDTO> employeeDTOList = employeeMapper.query(employeeQuery,pagination);
+	public Pagination<EmployeeQuery, EmployeeDTO> query(Pagination<EmployeeQuery, EmployeeDTO> pagination) {
+    	pagination.setResultTotal(count(pagination.getQuery()));
+    	List<EmployeeDTO> employeeDTOList = employeeMapper.query(pagination.getQuery(),pagination);
     	pagination.setRows(employeeDTOList);
 		
 		return pagination;

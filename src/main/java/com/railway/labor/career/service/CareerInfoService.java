@@ -14,8 +14,8 @@ public class CareerInfoService {
 	@Autowired
 	private CareerInfoDAO careerInfoDAO;
 
-	public Pagination<CareerInfoQuery, CareerInfoDTO> query(CareerInfoQuery careerInfoQuery) {
-		return careerInfoDAO.query(careerInfoQuery);
+	public Pagination<CareerInfoQuery, CareerInfoDTO> query(Pagination<CareerInfoQuery, CareerInfoDTO> pagination) {
+		return careerInfoDAO.query(pagination);
 	}
 
 	public CareerInfoDTO get(Long id) {

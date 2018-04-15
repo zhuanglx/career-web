@@ -18,11 +18,9 @@ public class EvaluationConditionDAO {
 	public Long count(EvaluationConditionQuery evaluationConditionQuery) {
 		return evaluationConditionMapper.count(evaluationConditionQuery);
 	}
-	public Pagination<EvaluationConditionQuery, EvaluationConditionDTO> query(EvaluationConditionQuery evaluationConditionQuery) {
-		Pagination<EvaluationConditionQuery, EvaluationConditionDTO> pagination = new Pagination<>();
-		pagination.setQuery(evaluationConditionQuery);
-    	pagination.setResultTotal(count(evaluationConditionQuery));
-    	List<EvaluationConditionDTO> evaluationConditionDTOList = evaluationConditionMapper.query(evaluationConditionQuery,pagination);
+	public Pagination<EvaluationConditionQuery, EvaluationConditionDTO> query(Pagination<EvaluationConditionQuery, EvaluationConditionDTO> pagination) {
+    	pagination.setResultTotal(count(pagination.getQuery()));
+    	List<EvaluationConditionDTO> evaluationConditionDTOList = evaluationConditionMapper.query(pagination.getQuery(),pagination);
     	pagination.setRows(evaluationConditionDTOList);
 		
 		return pagination;

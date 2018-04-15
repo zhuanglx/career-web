@@ -37,63 +37,39 @@
 
 
 	<sql id="Query_Params">
+		<if test="roleQuery.userId!=null">
+				INNER JOIN t_role on  t_career_info.employee_id = t_user_role.userId
+		</if>
 		<where>
 			del_flag='0'
 			<if test="roleQuery.id!=null">
 				and id=#{roleQuery.id}
 			</if>
-			<if test="roleQuery.employee_id!=null">
-				and name=#{roleQuery.employeeId}
-			</if>
-			<if test="roleQuery.typeOfWork!=null and roleQuery.typeOfWork!=''">
-				and type_of_work=#{roleQuery.typeOfWork}
-			</if>
-			<if test="roleQuery.sequenceOld!=null and roleQuery.sequenceOld!=''">
-				and sequence_old=#{roleQuery.sequenceOld}
-			</if>
-			<if test="roleQuery.gradeOld!=null and roleQuery.gradeOld!=''">
-				and grade_old=#{roleQuery.gradeOld}
-			</if>
-			<if test="roleQuery.starDetail!=null and roleQuery.starDetail!=''">
-				and star_detail=#{roleQuery.starDetail}
-			</if>
-			<if test="roleQuery.starDetail!=null and roleQuery.starDetail!=''">
-				and star_integral=#{roleQuery.starDetail}
-			</if>
-			<if test="roleQuery.skillDetail!=null and roleQuery.skillDetail!=''">
-				and skill_detail=#{roleQuery.skillDetail}
-			</if>
-			<if test="roleQuery.skillIntegral!=null and roleQuery.skillIntegral!=''">
-				and skill_integral=#{roleQuery.skillIntegral}
-			</if>
-			<if test="roleQuery.faultDetail!=null and roleQuery.faultDetail!=''">
-				and fault_detail=#{roleQuery.faultDetail}
-			</if>
-			<if test="roleQuery.faultIntegral!=null and roleQuery.faultIntegral!=''">
-				and fault_integral=#{roleQuery.faultIntegral}
-			</if>
-			<if test="roleQuery.projectDetail!=null and roleQuery.projectDetail!=''">
-				and project_detail=#{roleQuery.projectDetail}
-			</if>
-			<if test="roleQuery.projectIntegral!=null and roleQuery.projectIntegral!=''">
-				and project_integral=#{roleQuery.projectIntegral}
-			</if>
-			<if test="roleQuery.honorDetail!=null and roleQuery.honorDetail!=''">
-				and honor_detail=#{roleQuery.honorDetail}
-			</if>
-			<if test="roleQuery.honorIntegral!=null and roleQuery.honorIntegral!=''">
-				and honor_integral=#{roleQuery.honorIntegral}
-			</if>
-			<if test="roleQuery.quasirating!=null and roleQuery.quasirating!=''">
-				and quasirating=#{roleQuery.quasirating}
-			</if>
 			
+			<if test="roleQuery.parentId!=null">
+				and parent_id=#{roleQuery.parentId}
+			</if>
+			<if test="roleQuery.name!=null and roleQuery.name!=''">
+				and name like "%"#{roleQuery.name}"%"
+			</if>
+			<if test="roleQuery.descr!=null and roleQuery.descr!=''">
+				and descr like "%"#{roleQuery.descr}"%"
+			</if>
 		</where>
 	</sql>
 
 	<sql id="Pagination">
 		limit #{pagination.start}, #{pagination.limit}
 	</sql>
+
+
+	<select id="queryByUserId" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_user_role
+		<include refid="Query_Params" />
+		<include refid="Pagination" />
+	</select>
 
 	<select id="query" resultMap="BaseResultMap">
 		SELECT

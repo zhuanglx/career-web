@@ -6,21 +6,13 @@
 
 	<resultMap id="BaseResultMap" type="com.railway.labor.career.model.dto.PermissionDTO">
 		<id column="id" property="id" jdbcType="BIGINT" />
-		<result column="employee_id" property="employeeId" jdbcType="BIGINT" />
-		<result column="type_of_work" property="typeOfWork" jdbcType="VARCHAR" />
-		<result column="sequence_old" property="sequenceOld" jdbcType="VARCHAR" />
-		<result column="grade_old" property="gradeOld" jdbcType="VARCHAR" />
-		<result column="star_detail" property="starDetail" jdbcType="VARCHAR" />
-		<result column="star_integral" property="starIntegral" jdbcType="VARCHAR" />
-		<result column="skill_detail" property="skillDetail" jdbcType="VARCHAR" />
-		<result column="skill_integral" property="skillIntegral" jdbcType="VARCHAR" />
-		<result column="fault_detail" property="faultDetail" jdbcType="VARCHAR" />
-		<result column="fault_integral" property="faultIntegral" jdbcType="VARCHAR" />
-		<result column="project_detail" property="projectDetail" jdbcType="VARCHAR" />
-		<result column="project_integral" property="projectIntegral" jdbcType="VARCHAR" />
-		<result column="honor_detail" property="honorDetail" jdbcType="VARCHAR" />
-		<result column="honor_integral" property="honorIntegral" jdbcType="VARCHAR" />
-		<result column="quasirating" property="quasirating" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="value" property="value" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="BIGINT" />
+		<result column="level" property="level" jdbcType="VARCHAR" />
+		<result column="order" property="order" jdbcType="VARCHAR" />
+		<result column="descr" property="descr" jdbcType="VARCHAR" />
 		<result column="creator" property="creator" jdbcType="VARCHAR" />
 		<result column="create_date" property="createDate" jdbcType="DATE" />
 		<result column="modifier" property="modifier" jdbcType="VARCHAR" />
@@ -30,11 +22,8 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id,employee_id,type_of_work,sequence_old,grade_old,star_detail,star_integral,skill_detail,skill_integral
-		fault_detail,fault_integral,project_detail,project_integral,honor_detail,honor_integral,quasirating,
-		,creator, create_date, modifier, modify_date, remarks, del_flag
+		id,name,type,`value`,parent_id,`level`,`order`,descr,creator, create_date, modifier, modify_date, remarks, del_flag
 	</sql>
-
 
 	<sql id="Query_Params">
 		<where>
@@ -42,52 +31,37 @@
 			<if test="permissionQuery.id!=null">
 				and id=#{permissionQuery.id}
 			</if>
-			<if test="permissionQuery.employee_id!=null">
-				and name=#{permissionQuery.employeeId}
+			<if test="permissionQuery.parentId!=null">
+				and parent_id=#{permissionQuery.parentId}
 			</if>
-			<if test="permissionQuery.typeOfWork!=null and permissionQuery.typeOfWork!=''">
-				and type_of_work=#{permissionQuery.typeOfWork}
+			<if test="permissionQuery.name!=null and permissionQuery.name!=''">
+				and name=#{permissionQuery.name}
 			</if>
-			<if test="permissionQuery.sequenceOld!=null and permissionQuery.sequenceOld!=''">
-				and sequence_old=#{permissionQuery.sequenceOld}
+			<if test="permissionQuery.level!=null and permissionQuery.level!=''">
+				and `level`=#{permissionQuery.level}
 			</if>
-			<if test="permissionQuery.gradeOld!=null and permissionQuery.gradeOld!=''">
-				and grade_old=#{permissionQuery.gradeOld}
+			<if test="permissionQuery.type!=null and permissionQuery.type!=''">
+				and type=#{permissionQuery.type}
 			</if>
-			<if test="permissionQuery.starDetail!=null and permissionQuery.starDetail!=''">
-				and star_detail=#{permissionQuery.starDetail}
+			<if test="permissionQuery.value!=null and permissionQuery.value!=''">
+				and `value`=#{permissionQuery.value}
 			</if>
-			<if test="permissionQuery.starDetail!=null and permissionQuery.starDetail!=''">
-				and star_integral=#{permissionQuery.starDetail}
+			<if test="permissionQuery.order!=null and permissionQuery.order!=''">
+				and `order`=#{permissionQuery.order}
 			</if>
-			<if test="permissionQuery.skillDetail!=null and permissionQuery.skillDetail!=''">
-				and skill_detail=#{permissionQuery.skillDetail}
+			<if test="permissionQuery.descr!=null and permissionQuery.descr!=''">
+				and descr=#{permissionQuery.descr}
 			</if>
-			<if test="permissionQuery.skillIntegral!=null and permissionQuery.skillIntegral!=''">
-				and skill_integral=#{permissionQuery.skillIntegral}
-			</if>
-			<if test="permissionQuery.faultDetail!=null and permissionQuery.faultDetail!=''">
-				and fault_detail=#{permissionQuery.faultDetail}
-			</if>
-			<if test="permissionQuery.faultIntegral!=null and permissionQuery.faultIntegral!=''">
-				and fault_integral=#{permissionQuery.faultIntegral}
-			</if>
-			<if test="permissionQuery.projectDetail!=null and permissionQuery.projectDetail!=''">
-				and project_detail=#{permissionQuery.projectDetail}
-			</if>
-			<if test="permissionQuery.projectIntegral!=null and permissionQuery.projectIntegral!=''">
-				and project_integral=#{permissionQuery.projectIntegral}
-			</if>
-			<if test="permissionQuery.honorDetail!=null and permissionQuery.honorDetail!=''">
-				and honor_detail=#{permissionQuery.honorDetail}
-			</if>
-			<if test="permissionQuery.honorIntegral!=null and permissionQuery.honorIntegral!=''">
-				and honor_integral=#{permissionQuery.honorIntegral}
-			</if>
-			<if test="permissionQuery.quasirating!=null and permissionQuery.quasirating!=''">
-				and quasirating=#{permissionQuery.quasirating}
-			</if>
-			
+		</where>
+	</sql>
+
+	<sql id="Query_In_Params">
+		<where>
+			del_flag='0' 
+			and id IN
+				<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">  
+        			#{item}
+    			</foreach> 
 		</where>
 	</sql>
 
@@ -98,48 +72,91 @@
 	<select id="query" resultMap="BaseResultMap">
 		SELECT
 		<include refid="Base_Column_List" />
-		FROM t_career_info
+		FROM t_permission
 		<include refid="Query_Params" />
 		<include refid="Pagination" />
 	</select>
 
-	<select id="count" resultType="Long">
-		SELECT count(*)
-		FROM t_career_info
-		<include refid="Query_Params" />
+	<select id="queryByIds" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_permission
+		<include refid="Query_In_Params" />
 	</select>
 
+	<select id="count" resultType="Long">
+		SELECT count(*)
+		FROM t_permission
+		<include refid="Query_Params" />
+	</select>
+	
 	<select id="get" resultMap="BaseResultMap">
 		SELECT
 		<include refid="Base_Column_List" />
-		FROM t_career_info
+		FROM t_permission
 		WHERE id = #{id, jdbcType=BIGINT} and del_flag = '0'
 	</select>
 
 	<insert id="insert" parameterType="com.railway.labor.career.model.dto.PermissionDTO">
 		INSERT INTO
-		t_career_info
-		(name,account,telephone,email,password,creator, create_date, modifier,
+		t_permission
+		(name,type,`value`,parent_id,`level`,`order`,descr,creator, create_date, modifier,
 		modify_date, remarks, del_flag)
 		VALUES
-		(#{name},
-		#{account},#{telephone},#{email}, '11', #{creator},
+		(#{name},#{type},#{value},#{parentId},#{level},#{order},#{descr}, #{creator},
 		#{createDate},#{modifier}, #{modifyDate},#{remarks},#{delFlag})
 	</insert>
 
 	<update id="update" parameterType="com.railway.labor.career.model.dto.PermissionDTO">
-		UPDATE
-		t_career_info
-		SET
-		name = #{name},
-		password = #{password}
+		UPDATE t_permission
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="type != null">
+				type = #{type},
+			</if>
+			<if test="value != null">
+				`value` = #{value},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId},
+			</if>
+			<if test="level != null">
+				`level` = #{level},
+			</if>
+			<if test="order != null">
+				`order` = #{order},
+			</if>
+			<if test="descr != null">
+				descr = #{descr},
+			</if>
+			<if test="creator != null">
+				creator = #{creator},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate},
+			</if>
+			<if test="modifier != null">
+				modifier = #{modifier},
+			</if>
+			<if test="modifyDate != null">
+				modify_date = #{modifyDate},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag},
+			</if>
+		</set>
 		WHERE
 		id = #{id} and del_flag = '0'
 	</update>
-
+	
 	<delete id="delete" parameterType="java.lang.Long">
 		UPDATE
-		t_career_info
+		t_permission
 		SET
 		del_flag = '1'
 		WHERE

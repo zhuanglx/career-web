@@ -5,6 +5,8 @@ public class RoleQuery extends BaseQuery {
 	private Long id;
 	private String name;
 	private Long parentId;
+	private Long userId;
+	
 	private Long descr;
 
 	public Long getId() {
@@ -38,4 +40,13 @@ public class RoleQuery extends BaseQuery {
 	public void setDescr(Long descr) {
 		this.descr = descr;
 	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+	
 }

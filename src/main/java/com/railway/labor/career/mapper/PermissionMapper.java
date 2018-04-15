@@ -12,6 +12,8 @@ public interface PermissionMapper {
 
 	List<PermissionDTO> query(@Param("permissionQuery") PermissionQuery permissionQuery, @Param("pagination") Pagination<PermissionQuery, PermissionDTO> pagination);
 
+	List<PermissionDTO> queryByIds(@Param("ids") List<Long> ids);
+
 	Long count(@Param("permissionQuery") PermissionQuery permissionQuery);
 
 	PermissionDTO get(Long id);

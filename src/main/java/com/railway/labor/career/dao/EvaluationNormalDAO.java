@@ -18,11 +18,9 @@ public class EvaluationNormalDAO {
 	public Long count(EvaluationNormalQuery evaluationNormalQuery) {
 		return evaluationNormalMapper.count(evaluationNormalQuery);
 	}
-	public Pagination<EvaluationNormalQuery, EvaluationNormalDTO> query(EvaluationNormalQuery evaluationNormalQuery) {
-		Pagination<EvaluationNormalQuery, EvaluationNormalDTO> pagination = new Pagination<>();
-		pagination.setQuery(evaluationNormalQuery);
-    	pagination.setResultTotal(count(evaluationNormalQuery));
-    	List<EvaluationNormalDTO> evaluationNormalDTOList = evaluationNormalMapper.query(evaluationNormalQuery,pagination);
+	public Pagination<EvaluationNormalQuery, EvaluationNormalDTO> query(Pagination<EvaluationNormalQuery, EvaluationNormalDTO> pagination) {
+    	pagination.setResultTotal(count(pagination.getQuery()));
+    	List<EvaluationNormalDTO> evaluationNormalDTOList = evaluationNormalMapper.query(pagination.getQuery(),pagination);
     	pagination.setRows(evaluationNormalDTOList);
 		
 		return pagination;
@@ -36,10 +34,9 @@ public class EvaluationNormalDAO {
 		evaluationNormalMapper.insert(evaluationNormalDTO);
 	}
 
-	public void update(EvaluationNormalDTO evaluationNormalDTO) {
-		evaluationNormalMapper.insert(evaluationNormalDTO);
+	public int update(EvaluationNormalDTO evaluationNormalDTO) {
+		return evaluationNormalMapper.update(evaluationNormalDTO);
 	}
-
 	public void delete(Long id) {
 		evaluationNormalMapper.delete(id);
 	}

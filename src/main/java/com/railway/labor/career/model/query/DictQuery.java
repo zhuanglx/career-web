@@ -1,6 +1,6 @@
 package com.railway.labor.career.model.query;
 
-public class SysDictQuery extends BaseQuery {
+public class DictQuery extends BaseQuery {
 	private static final long serialVersionUID = -4933903260342950073L;
 	private Long id;
 	private String name;

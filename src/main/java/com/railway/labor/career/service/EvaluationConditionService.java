@@ -14,8 +14,8 @@ public class EvaluationConditionService {
 	@Autowired
 	private EvaluationConditionDAO evaluationConditionDAO;
 
-	public Pagination<EvaluationConditionQuery, EvaluationConditionDTO> query(EvaluationConditionQuery evaluationConditionQuery) {
-		return evaluationConditionDAO.query(evaluationConditionQuery);
+	public Pagination<EvaluationConditionQuery, EvaluationConditionDTO> query(Pagination<EvaluationConditionQuery, EvaluationConditionDTO> pagination) {
+		return evaluationConditionDAO.query(pagination);
 	}
 
 	public EvaluationConditionDTO get(Long id) {

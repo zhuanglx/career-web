@@ -5,6 +5,8 @@ import java.util.Date;
 public class EvaluationNormalQuery extends BaseQuery {
 	private static final long serialVersionUID = -3330144592859167555L;
 	private Long id;
+	private String batchNo;
+	private String inputDepartmentId;
 	private String employeeId;
 	private Long scoreType;
 	private Long scoreName;
@@ -20,6 +22,22 @@ public class EvaluationNormalQuery extends BaseQuery {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getBatchNo() {
+		return batchNo;
+	}
+
+	public void setBatchNo(String batchNo) {
+		this.batchNo = batchNo;
+	}
+
+	public String getInputDepartmentId() {
+		return inputDepartmentId;
+	}
+
+	public void setInputDepartmentId(String inputDepartmentId) {
+		this.inputDepartmentId = inputDepartmentId;
 	}
 
 	public String getEmployeeId() {

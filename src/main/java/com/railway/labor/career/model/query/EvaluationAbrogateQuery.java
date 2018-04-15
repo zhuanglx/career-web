@@ -1,11 +1,13 @@
 package com.railway.labor.career.model.query;
 
+import java.util.Date;
+
 public class EvaluationAbrogateQuery extends BaseQuery {
 	private static final long serialVersionUID = -9190346216450604207L;
 	private Long id;
 	private String employeeId;
 	private String noCommentCondition;
-	private String evaluateDate;
+	private Date evaluateDate;
 
 	public Long getId() {
 		return id;
@@ -31,11 +33,11 @@ public class EvaluationAbrogateQuery extends BaseQuery {
 		this.noCommentCondition = noCommentCondition;
 	}
 
-	public String getEvaluateDate() {
+	public Date getEvaluateDate() {
 		return evaluateDate;
 	}
 
-	public void setEvaluateDate(String evaluateDate) {
+	public void setEvaluateDate(Date evaluateDate) {
 		this.evaluateDate = evaluateDate;
 	}
 }

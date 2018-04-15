@@ -9,6 +9,7 @@ public class UserQuery extends BaseQuery {
 	private String telephone;
 	private String email;
 	private String password;
+	private String employeeId;
 
 	public Long getId() {
 		return id;
@@ -57,4 +58,13 @@ public class UserQuery extends BaseQuery {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public String getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(String employeeId) {
+		this.employeeId = employeeId;
+	}
+	
 }

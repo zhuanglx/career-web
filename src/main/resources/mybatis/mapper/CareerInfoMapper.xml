@@ -4,9 +4,14 @@
 
 <mapper namespace="com.railway.labor.career.mapper.CareerInfoMapper">
 
-	<resultMap id="BaseResultMap" type="com.railway.labor.career.model.dto.CareerInfoDTO">
+	<resultMap id="QueryResultMap" type="com.railway.labor.career.model.dto.CareerInfoDTO">
 		<id column="id" property="id" jdbcType="BIGINT" />
 		<result column="employee_id" property="employeeId" jdbcType="BIGINT" />
+		<result column="t_employee_job_number" property="employeeJobNumber" jdbcType="VARCHAR" />
+		<result column="t_employee_name" property="employeeName" jdbcType="VARCHAR" />
+		<result column="t_department_name" property="departmentName" jdbcType="VARCHAR" />
+		<result column="t_team_name" property="teamName" jdbcType="VARCHAR" />
+		<result column="evaluate_year" property="evaluateYear" jdbcType="VARCHAR" />
 		<result column="type_of_work" property="typeOfWork" jdbcType="VARCHAR" />
 		<result column="sequence_old" property="sequenceOld" jdbcType="VARCHAR" />
 		<result column="grade_old" property="gradeOld" jdbcType="VARCHAR" />
@@ -21,6 +26,7 @@
 		<result column="honor_detail" property="honorDetail" jdbcType="VARCHAR" />
 		<result column="honor_integral" property="honorIntegral" jdbcType="VARCHAR" />
 		<result column="quasirating" property="quasirating" jdbcType="VARCHAR" />
+		<result column="to_uasirating" property="toQuasirating" jdbcType="VARCHAR" />
 		<result column="creator" property="creator" jdbcType="VARCHAR" />
 		<result column="create_date" property="createDate" jdbcType="DATE" />
 		<result column="modifier" property="modifier" jdbcType="VARCHAR" />
@@ -29,21 +35,31 @@
 		<result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
 	</resultMap>
 
-	<sql id="Base_Column_List">
-		id,employee_id,type_of_work,sequence_old,grade_old,star_detail,star_integral,skill_detail,skill_integral
-		fault_detail,fault_integral,project_detail,project_integral,honor_detail,honor_integral,quasirating,
-		creator, create_date, modifier, modify_date, remarks, del_flag
+	<sql id="Query_Column_List">
+		t_career_info.id,t_employee.job_number as t_employee_job_number, t_employee.name as t_employee_name,t_department.name as t_department_name,t_team.name as t_team_name, 
+		evaluate_year, type_of_work,sequence_old,grade_old, quasirating,to_quasirating
 	</sql>
-
-
+	
 	<sql id="Query_Params">
+		INNER JOIN t_employee on  t_career_info.employee_id = t_employee.id
+		INNER JOIN t_team on t_employee.team_id=t_team.id
+		INNER JOIN t_department on t_team.department_id=t_department.id
 		<where>
-			del_flag='0'
-			<if test="careerInfoQuery.id!=null">
-				and id=#{careerInfoQuery.id}
+			t_career_info.del_flag='0' and t_employee.del_flag='0' and t_team.del_flag='0' and t_department.del_flag='0'
+			<if test="careerInfoQuery.employeeJobNumber!=null and careerInfoQuery.employeeJobNumber!=''">
+				and t_employee.job_number like "%"#{careerInfoQuery.employeeJobNumber}"%"
 			</if>
-			<if test="careerInfoQuery.employeeId!=null">
-				and employeeId=#{careerInfoQuery.employeeId}
+			<if test="careerInfoQuery.employeeName!=null and careerInfoQuery.employeeName!=''">
+				and t_employee.name like "%"#{careerInfoQuery.employeeName}"%"
+			</if>
+			<if test="careerInfoQuery.departmentName!=null and careerInfoQuery.departmentName!=''">
+				and t_department.name like "%"#{careerInfoQuery.departmentName}"%"
+			</if>
+			<if test="careerInfoQuery.teamName!=null and careerInfoQuery.teamName!=''">
+				and t_team.name like "%"#{careerInfoQuery.teamName}"%"
+			</if>
+			<if test="careerInfoQuery.evaluateYear!=null and careerInfoQuery.evaluateYear!=''">
+				and evaluate_year=#{careerInfoQuery.evaluateYear}
 			</if>
 			<if test="careerInfoQuery.typeOfWork!=null and careerInfoQuery.typeOfWork!=''">
 				and type_of_work=#{careerInfoQuery.typeOfWork}
@@ -54,40 +70,12 @@
 			<if test="careerInfoQuery.gradeOld!=null and careerInfoQuery.gradeOld!=''">
 				and grade_old=#{careerInfoQuery.gradeOld}
 			</if>
-			<if test="careerInfoQuery.starDetail!=null and careerInfoQuery.starDetail!=''">
-				and star_detail=#{careerInfoQuery.starDetail}
-			</if>
-			<if test="careerInfoQuery.starDetail!=null and careerInfoQuery.starDetail!=''">
-				and star_integral=#{careerInfoQuery.starDetail}
-			</if>
-			<if test="careerInfoQuery.skillDetail!=null and careerInfoQuery.skillDetail!=''">
-				and skill_detail=#{careerInfoQuery.skillDetail}
-			</if>
-			<if test="careerInfoQuery.skillIntegral!=null and careerInfoQuery.skillIntegral!=''">
-				and skill_integral=#{careerInfoQuery.skillIntegral}
-			</if>
-			<if test="careerInfoQuery.faultDetail!=null and careerInfoQuery.faultDetail!=''">
-				and fault_detail=#{careerInfoQuery.faultDetail}
-			</if>
-			<if test="careerInfoQuery.faultIntegral!=null and careerInfoQuery.faultIntegral!=''">
-				and fault_integral=#{careerInfoQuery.faultIntegral}
-			</if>
-			<if test="careerInfoQuery.projectDetail!=null and careerInfoQuery.projectDetail!=''">
-				and project_detail=#{careerInfoQuery.projectDetail}
-			</if>
-			<if test="careerInfoQuery.projectIntegral!=null and careerInfoQuery.projectIntegral!=''">
-				and project_integral=#{careerInfoQuery.projectIntegral}
-			</if>
-			<if test="careerInfoQuery.honorDetail!=null and careerInfoQuery.honorDetail!=''">
-				and honor_detail=#{careerInfoQuery.honorDetail}
-			</if>
-			<if test="careerInfoQuery.honorIntegral!=null and careerInfoQuery.honorIntegral!=''">
-				and honor_integral=#{careerInfoQuery.honorIntegral}
-			</if>
 			<if test="careerInfoQuery.quasirating!=null and careerInfoQuery.quasirating!=''">
 				and quasirating=#{careerInfoQuery.quasirating}
 			</if>
-			
+			<if test="careerInfoQuery.toQuasirating!=null and careerInfoQuery.toQuasirating!=''">
+				and to_quasirating=#{careerInfoQuery.toQuasirating}
+			</if>
 		</where>
 	</sql>
 
@@ -95,23 +83,23 @@
 		limit #{pagination.start}, #{pagination.limit}
 	</sql>
 
-	<select id="query" resultMap="BaseResultMap">
+	<select id="query" resultMap="QueryResultMap">
 		SELECT
-		<include refid="Base_Column_List" />
+		<include refid="Query_Column_List" />
 		FROM t_career_info
 		<include refid="Query_Params" />
 		<include refid="Pagination" />
 	</select>
-
+	
 	<select id="count" resultType="Long">
 		SELECT count(*)
 		FROM t_career_info
 		<include refid="Query_Params" />
 	</select>
 
-	<select id="get" resultMap="BaseResultMap">
+	<select id="get" resultMap="QueryResultMap">
 		SELECT
-		<include refid="Base_Column_List" />
+		<include refid="Query_Column_List" />
 		FROM t_career_info
 		WHERE id = #{id, jdbcType=BIGINT} and del_flag = '0'
 	</select>

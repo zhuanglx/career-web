@@ -1,9 +1,8 @@
 package com.railway.labor.career.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,8 +21,7 @@ import com.railway.labor.career.service.EvaluationConditionService;
  */
 @Controller
 @RequestMapping("/evaluationCondition")
-public class EvaluationConditionController {
-	protected static final Logger logger = LoggerFactory.getLogger(EvaluationConditionController.class);
+public class EvaluationConditionController extends BaseController{
 	@Autowired
 	private EvaluationConditionService evaluationConditionService;
 
@@ -34,11 +32,14 @@ public class EvaluationConditionController {
 	 */
 	@RequestMapping(value = { "list", "" })
 	@ResponseBody
-	public BaseResult<Pagination<EvaluationConditionQuery, EvaluationConditionDTO>> list(EvaluationConditionQuery evaluationConditionQuery) {
+	public BaseResult<Pagination<EvaluationConditionQuery, EvaluationConditionDTO>> list(@RequestBody EvaluationConditionQuery evaluationConditionQuery, @RequestBody Integer pageSize, @RequestBody Long pageIndex) {
 		BaseResult<Pagination<EvaluationConditionQuery, EvaluationConditionDTO>> baseResult = new BaseResult<>();
-		Pagination<EvaluationConditionQuery, EvaluationConditionDTO> pagination = null;
+		Pagination<EvaluationConditionQuery, EvaluationConditionDTO> pagination = new Pagination<>();
+		pagination.setQuery(evaluationConditionQuery);
+		pagination.setPageIndex(pageIndex);
+		pagination.setPageSize(pageSize);
 		try {
-			pagination = evaluationConditionService.query(evaluationConditionQuery);
+			pagination = evaluationConditionService.query(pagination);
 			if(pagination==null){
 				baseResult.setErrorCode(ErrorConstant.USER_NULL_CODE);
 				baseResult.setErrorMsg(ErrorConstant.USER_NULL_MSG);
@@ -64,7 +65,7 @@ public class EvaluationConditionController {
 	 */
 	@RequestMapping(value = "get")
 	@ResponseBody
-	public BaseResult<EvaluationConditionDTO> get(Long id) {
+	public BaseResult<EvaluationConditionDTO> get(@RequestBody Long id) {
 		BaseResult<EvaluationConditionDTO> baseResult = new BaseResult<>();
 		EvaluationConditionDTO evaluationConditionDTO = null;
 		try {

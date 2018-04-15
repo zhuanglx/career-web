@@ -18,11 +18,9 @@ public class EvaluationPromoteDAO {
 	public Long count(EvaluationPromoteQuery evaluationPromoteQuery) {
 		return evaluationPromoteMapper.count(evaluationPromoteQuery);
 	}
-	public Pagination<EvaluationPromoteQuery, EvaluationPromoteDTO> query(EvaluationPromoteQuery evaluationPromoteQuery) {
-		Pagination<EvaluationPromoteQuery, EvaluationPromoteDTO> pagination = new Pagination<>();
-		pagination.setQuery(evaluationPromoteQuery);
-    	pagination.setResultTotal(count(evaluationPromoteQuery));
-    	List<EvaluationPromoteDTO> evaluationPromoteDTOList = evaluationPromoteMapper.query(evaluationPromoteQuery,pagination);
+	public Pagination<EvaluationPromoteQuery, EvaluationPromoteDTO> query(Pagination<EvaluationPromoteQuery, EvaluationPromoteDTO> pagination) {
+    	pagination.setResultTotal(count(pagination.getQuery()));
+    	List<EvaluationPromoteDTO> evaluationPromoteDTOList = evaluationPromoteMapper.query(pagination.getQuery(),pagination);
     	pagination.setRows(evaluationPromoteDTOList);
 		
 		return pagination;
@@ -36,8 +34,8 @@ public class EvaluationPromoteDAO {
 		evaluationPromoteMapper.insert(evaluationPromoteDTO);
 	}
 
-	public void update(EvaluationPromoteDTO evaluationPromoteDTO) {
-		evaluationPromoteMapper.insert(evaluationPromoteDTO);
+	public int update(EvaluationPromoteDTO evaluationPromoteDTO) {
+		return evaluationPromoteMapper.update(evaluationPromoteDTO);
 	}
 
 	public void delete(Long id) {

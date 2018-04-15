@@ -18,7 +18,7 @@ public interface EvaluationAbrogateMapper {
 
 	void insert(EvaluationAbrogateDTO evaluationAbrogateDTO);
 
-	void update(EvaluationAbrogateDTO evaluationAbrogateDTO);
+	int update(EvaluationAbrogateDTO evaluationAbrogateDTO);
 
 	void delete(Long id);
 }
